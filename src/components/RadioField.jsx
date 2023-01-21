@@ -12,7 +12,7 @@ export function RadioField({ name, group }) {
   const fieldRef = useRef(null);
 	const radioRef = useRef(null);
 
-  const { value, category, active, checked, disabled } = state;
+  const { value, category, checked, disabled } = state;
 
   const id = name + group;
 
@@ -69,7 +69,10 @@ export function RadioField({ name, group }) {
 				value = `${value}×${value}`.slice(0, maxLength);
 			}
 		}
-		dispatch({ action: 'BLURRED', name, group, value });
+
+    setTimeout(() => { // timeout to prevent rerenders on validation
+      dispatch({ action: 'BLURRED', name, group, value });
+    }, 100);
   };
 
   useEffect(() => {
@@ -111,9 +114,7 @@ export function RadioField({ name, group }) {
 					<input type="text" className="radiofield__input_text" 
 						ref={fieldRef}
 						maxLength={maxLength}
-						value={
-							(disabled ? disabledValue : (checked ? value : blurredValue))
-						}
+						value={disabled ? disabledValue : (checked ? value : blurredValue)}
 						onChange={handleInput}
 						onClick={handleCheck}
 						onInput={handleCheck}
