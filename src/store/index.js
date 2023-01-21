@@ -1,1 +1,1 @@
-export { StoreProvider, useStoreDispatch, useStoreElementState } from './store';
+export { elementSelector, StoreProvider, useStoreDispatch, useStoreSelector } from './store';

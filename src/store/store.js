@@ -1,16 +1,16 @@
 import { createContext, useContext, useReducer } from 'react';
 
 import { reducer } from './reducer';
-import { storeElementsInitialState } from './initialState';
+import { initialState } from './initialState';
 
 const StoreElementsStateContext = createContext(null);
 const StoreDispatchContext = createContext(null);
 
 export function StoreProvider({ children }) {
-  const [storeElementsCurrentState, dispatch] = useReducer(reducer, storeElementsInitialState);
+  const [currentState, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <StoreElementsStateContext.Provider value={storeElementsCurrentState}>
+    <StoreElementsStateContext.Provider value={currentState}>
       <StoreDispatchContext.Provider value={dispatch}>
         {children}
       </StoreDispatchContext.Provider>
@@ -18,12 +18,17 @@ export function StoreProvider({ children }) {
   );
 }
 
-export function useStoreElementState({ name, group }) {
-  const storeElementsCurrentState = useContext(StoreElementsStateContext);
+export function elementSelector({ name, group }) {
+  return (state) => {
+    return state.elements.find((element) => {
+      return element.name === name && element.group === group;
+    });
+  };
+}
 
-  return storeElementsCurrentState.find((element) => {
-    return element.name === name && element.group === group;
-  });
+export function useStoreSelector(selector) {
+  const currentState = useContext(StoreElementsStateContext);
+  return selector(currentState);
 }
 
 export function useStoreDispatch() {
