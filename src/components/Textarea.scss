@@ -1,0 +1,44 @@
+.textarea__wrapper {
+	margin: 2rem 0 0 0;
+	position: relative;
+	border-radius: 5px;
+	background: #fcfcfc;
+}
+
+.textarea__input {
+	position: relative;
+	z-index: 2;
+	display: block;
+	box-sizing: border-box; 
+	min-width: 20rem;
+	width: 100%;
+	min-height: 20rem;
+	margin: 0 0 1.3rem 0;
+	padding: 1rem;
+	font: 1.1rem/1 monospace;
+	border: none;
+	overflow: hidden; 
+	overflow-wrap: break-word;
+	outline: none;
+	resize: none;
+	background: transparent;
+
+	border: 2px solid #ddd;
+	border-radius: 5px;
+	background: transparent;
+	box-sizing: border-box;
+}
+
+.textarea__placeholder {
+	position: absolute;
+	z-index: 1;
+	border: 2px solid transparent;
+	padding: 1rem;
+	color: #999;
+}
+
+.textarea__input:hover,
+.textarea__input:focus {
+	border-color: #555;
+	transition: all 0.1s ease-in;
+}
