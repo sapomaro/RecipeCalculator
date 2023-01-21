@@ -8,10 +8,14 @@ const radioFieldDefaultSettings = {
 
 export const initialState = {
 	aggregateData: {
+		inputSize: '',
 		inputVolume: 0,
 		inputShape: '',
 		inputRecipe: '',
 
+		multiplier: 0,
+
+		outputSize: '',
 		outputVolume: 0,
 		outputShape: '',
 		outputRecipe: '',
@@ -23,14 +27,14 @@ export const initialState = {
 		{ name: 'round_pan', group: 'in', category: 'pans', ...radioFieldDefaultSettings },
 		{ name: 'rect_pan', group: 'in', category: 'pans', ...radioFieldDefaultSettings },
 
-		{ name: 'ingredients', group: 'in', type: 'textarea', value: 'INGREDIENTS INPUT TEST' },
+		{ name: 'ingredients', group: 'in', type: 'textarea', value: '' },
 
 		{ name: 'servings', group: 'out', category: 'volume', ...radioFieldDefaultSettings },
 		{ name: 'round_pan', group: 'out', category: 'pans', ...radioFieldDefaultSettings, disabled: true },
 		{ name: 'rect_pan', group: 'out', category: 'pans', ...radioFieldDefaultSettings, disabled: true },
 
-		{ name: 'ingredients', group: 'out', type: 'textarea', value: 'INGREDIENTS OUTPUT TEST' },
+		{ name: 'ingredients', group: 'out', type: 'textarea', value: '' },
 
-		{ name: 'summary', group: 'out', type: 'note', value: 'NOTE TEST' },
+		{ name: 'summary', group: 'out', type: 'note', value: '' },
 	],
 };

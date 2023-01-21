@@ -18,6 +18,10 @@ export function StoreProvider({ children }) {
   );
 }
 
+export function aggregateDataSelector(state) {
+  return state.aggregateData;
+}
+
 export function elementSelector({ name, group }) {
   return (state) => {
     return state.elements.find((element) => {
