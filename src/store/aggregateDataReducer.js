@@ -26,10 +26,9 @@ export function aggregateDataReducer(state, element) {
         updatedData.outputVolume = 0;
       }
     }
-
     updatedData.multiplier = getMultiplier(updatedData.inputVolume || state.inputVolume, updatedData.outputVolume);
   }
-  if (element.type === 'textarea') {
+  if (element.type === 'textarea' && element.group === 'in') {
     updatedData.inputRecipe = element.value;
   }
 
