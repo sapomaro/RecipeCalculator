@@ -45,6 +45,7 @@ export function reducer(state, actionElement) {
               storeElement.valid = elementValidationReducer(storeElement);
             }
           }
+          updateAggregateData(storeElement);
           return storeElement;
         }),
         aggregateData: updatedAggregateData,
