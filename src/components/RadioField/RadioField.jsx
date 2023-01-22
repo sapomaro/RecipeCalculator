@@ -1,18 +1,16 @@
 import { useEffect, useRef } from 'react';
-import { elementSelector, useStoreDispatch, useStoreSelector } from '../store';
-import { useValidation } from '../hooks';
+import { elementSelector, useStoreDispatch, useStoreSelector } from '../../store';
 
 import './RadioField.scss';
 
 export function RadioField({ name, group }) {
   const state = useStoreSelector(elementSelector({ name, group }));
   const dispatch = useStoreDispatch();
-  const [valid, validate] = useValidation(state);
 
   const fieldRef = useRef(null);
 	const radioRef = useRef(null);
 
-  const { value, category, checked, disabled } = state;
+  const { value, category, active, checked, valid, disabled } = state;
 
   const id = name + group;
 
@@ -33,15 +31,16 @@ export function RadioField({ name, group }) {
     (name === 'round_pan') ? ['⌀ Диаметр', '(см)'] :
     (name === 'rect_pan') ? ['⊞ Длина × ширина', '(см)'] :
     ['', ''];
-  	
+
+  const hasError = !(valid || (!active && !checked));
   const [sublabelTopError, sublabelBottomError] =
     ['⚠ Неверное', 'значение'];
 
   const hintIfDisabled =
-    (disabled && category === 'pans') ? `Нельзя пересчитать размеры формы для выпечки в количество порций.
-      Если вам нужны именно порции, выберите соответствующую опцию выше в шаге №1.` :
-    (disabled && category === 'volume') ? `Нельзя пересчитать количество порций в размеры формы для выпечки.
-      Если вам нужны именно формы для выпечки, выберите соответствующую опцию выше в шаге №1.` :
+    (disabled && category === 'pans') ? 'Нельзя пересчитать размеры формы для выпечки в количество порций. ' +
+      'Если вам нужны именно порции, выберите соответствующую опцию выше в шаге №1.' :
+    (disabled && category === 'volume') ? 'Нельзя пересчитать количество порций в размеры формы для выпечки. ' +
+      'Если вам нужны именно формы для выпечки, выберите соответствующую опцию выше в шаге №1.' :
     '';
 
   const handleCheck = () => {
@@ -70,9 +69,7 @@ export function RadioField({ name, group }) {
 			}
 		}
 
-    setTimeout(() => { // timeout to prevent rerenders on validation
-      dispatch({ action: 'BLURRED', name, group, value });
-    }, 100);
+    dispatch({ action: 'BLURRED', name, group, value });
   };
 
   useEffect(() => {
@@ -80,15 +77,17 @@ export function RadioField({ name, group }) {
       return null;
     }
 
-    validate();
-
-    if (checked && !valid) {
+    if (!hasError) {
+      fieldRef.current.setCustomValidity('');
+      radioRef.current.setCustomValidity('');
+    }
+    else {
       fieldRef.current.setCustomValidity('invalid');
       radioRef.current.setCustomValidity('invalid');
     }
-    else {
-      fieldRef.current.setCustomValidity('');
-      radioRef.current.setCustomValidity('');
+
+    if (active) {
+      fieldRef.current.focus();
     }
   });
 
@@ -108,7 +107,7 @@ export function RadioField({ name, group }) {
       >
 				<span className={`radiofield__shape radiofield__shape_${name}`}>
           <span className="radiofield__sublabel">
-            {valid ? sublabelTopNormal : sublabelTopError}
+            {!hasError ? sublabelTopNormal : sublabelTopError}
           </span>
 
 					<input type="text" className="radiofield__input_text" 
@@ -123,7 +122,7 @@ export function RadioField({ name, group }) {
 					/>
 
           <span className="radiofield__sublabel">
-            {valid ? sublabelBottomNormal : sublabelBottomError}
+            {!hasError ? sublabelBottomNormal : sublabelBottomError}
           </span>
 				</span>
 

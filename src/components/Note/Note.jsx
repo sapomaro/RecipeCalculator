@@ -1,9 +1,11 @@
-import { aggregateDataSelector, useStoreSelector } from '../store';
+import { useEffect } from 'react';
+import { aggregateDataSelector, useStoreDispatch, useStoreSelector } from '../../store';
 
 import './Note.scss';
 
 export function Note() {
   const data = useStoreSelector(aggregateDataSelector);
+  const dispatch = useStoreDispatch();
 
   const { inputShape, inputSize, multiplier, outputShape, outputSize } = data;
 
@@ -24,9 +26,16 @@ export function Note() {
 		}
 	};
 
+  useEffect(() => {
+    dispatch({ action: 'INIT' });
+  }, []);
+
   return (
 		<div className="note">
-      <p>{multiplier ? 'Вес ∕ объём каждного ингредиента перемножается на: ' + multiplier + '' : ''}</p>
+      <p>
+        {multiplier ? 'Вес ∕ объём каждного ингредиента перемножается на: ' : ''}
+        <b>{multiplier ? multiplier : ''}</b>
+      </p>
 
       <p>Исходные данные из рецепта: <b>{getSizeInfo(inputShape, inputSize) || 'укажите выше ⬆'}</b></p>
 

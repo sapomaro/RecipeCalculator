@@ -1,3 +1,4 @@
-export { Note } from './Note';
-export { RadioField } from './RadioField';
-export { Textarea } from './Textarea';
+export { Note } from './Note/Note';
+export { RadioField } from './RadioField/RadioField';
+export { TextareaInput } from './Textarea/TextareaInput';
+export { TextareaOutput } from './Textarea/TextareaOutput';
