@@ -1,5 +1,5 @@
 import { StoreProvider as LocalStoreProvider } from './store';
-import { Note, RadioField, Textarea } from './components';
+import { Note, RadioField, TextareaInput, TextareaOutput } from './components';
 
 export function RecipeCalculator() {
   return (
@@ -27,7 +27,7 @@ export function RecipeCalculator() {
 
         <h3>Ингредиенты:</h3>
 
-        <Textarea name="ingredients" group="in" />
+        <TextareaInput name="ingredients" group="in" />
 
         <h2>Шаг №2: укажите желаемые параметры для пересчёта</h2>
 
@@ -39,7 +39,7 @@ export function RecipeCalculator() {
 
         <h3>Результат рассчётов:</h3>
 
-        <Textarea name="ingredients" group="out" />
+        <TextareaOutput name="ingredients" group="out" />
 
         <Note name="summary" group="out" />
       </div>
