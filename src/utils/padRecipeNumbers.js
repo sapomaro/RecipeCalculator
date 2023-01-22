@@ -1,4 +1,4 @@
-export function formatRecipe(text, lang = 'ru') {
+export function padRecipeNumbers(text, lang = 'ru') {
   if (lang !== 'ru') {
     return '';
   }

@@ -1,6 +1,6 @@
 import { Textarea } from './Textarea';
 import { elementSelector, useStoreDispatch, useStoreSelector } from '../../store';
-import { formatRecipe } from '../../utils';
+import { padRecipeNumbers } from '../../utils';
 
 export function TextareaInput({ name, group }) {
   const state = useStoreSelector(elementSelector({ name, group }));
@@ -21,7 +21,7 @@ export function TextareaInput({ name, group }) {
   const handleInput = (event) => {
     let value = event.target.value;
     if (pasted) {
-			value = formatRecipe(value);
+			value = padRecipeNumbers(value);
 		}
     dispatch({ action: 'TYPED', name, group, value });
   };

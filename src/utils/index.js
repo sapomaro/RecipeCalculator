@@ -1,2 +1,5 @@
 export { autoResize } from './autoResize';
-export { formatRecipe } from './formatRecipe';
+export { fixRecipeWordForms } from './fixRecipeWordForms';
+export { multiplyRecipeNumbers } from './multiplyRecipeNumbers';
+export { normalizeRecipeNumbers } from './normalizeRecipeNumbers';
+export { padRecipeNumbers } from './padRecipeNumbers';
