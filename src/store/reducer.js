@@ -1,7 +1,12 @@
 import { aggregateDataReducer } from './aggregateDataReducer';
+import { elementValidationReducer } from './elementValidationReducer';
 
 export function reducer(state, actionElement) {
-  let updatedData = {};
+  let updatedAggregateData = state.aggregateData;
+
+  const updateAggregateData = (storeElement) => {
+    updatedAggregateData = aggregateDataReducer(updatedAggregateData, storeElement);
+  };
 
 	switch (actionElement.action) {
 		case 'CHECKED':
@@ -10,57 +15,62 @@ export function reducer(state, actionElement) {
           if (storeElement.type === 'radiofield') {
             if (storeElement.group === actionElement.group) {
               if (storeElement.name === actionElement.name) {
-                updatedData = { ...updatedData, ...aggregateDataReducer(state.aggregateData, storeElement) };
- 
-                return { ...storeElement, checked: true, active: true };
+                storeElement = { ...storeElement, checked: true, active: true };
               } else {
-                return { ...storeElement, checked: false, active: false };
+                storeElement = { ...storeElement, checked: false, active: false };
               }
             } else if (storeElement.group === 'out') {
-              if (storeElement.checked) {
-                updatedData = { ...updatedData, ...aggregateDataReducer(state.aggregateData, storeElement) };
-              }
-
               if (storeElement.category === actionElement.category) {
-                return { ...storeElement, disabled: false };
+                storeElement = { ...storeElement, disabled: false };
               } else {
-                return { ...storeElement, checked: false, disabled: true };
+                storeElement = { ...storeElement, checked: false, disabled: true };
               }
             }
           }
+
+          storeElement.valid = elementValidationReducer(storeElement);
+          updateAggregateData(storeElement);
+
           return storeElement;
         }),
-        aggregateData: updatedData,
+        aggregateData: updatedAggregateData,
       };
 
 		case 'BLURRED':
 			return {
-        ...state,
         elements: state.elements.map((storeElement) => {
           if (storeElement.type === 'radiofield') {
             if (storeElement.name === actionElement.name && storeElement.group === actionElement.group) {
-              return { ...storeElement, active: false, value: actionElement.value };
+              storeElement = { ...storeElement, active: false, value: actionElement.value };
+              storeElement.valid = elementValidationReducer(storeElement);
             }
           }
           return storeElement;
         }),
+        aggregateData: updatedAggregateData,
       };
 
 		case 'TYPED':
 			return {
         elements: state.elements.map((storeElement) => {
           if (storeElement.name === actionElement.name && storeElement.group === actionElement.group) {
-            const updatedElement = { ...storeElement, value: actionElement.value };
-            updatedData = aggregateDataReducer(state.aggregateData, updatedElement);
-            return updatedElement;
+            storeElement = { ...storeElement, value: actionElement.value };
+            storeElement.valid = elementValidationReducer(storeElement);
           }
+          updateAggregateData(storeElement);
           return storeElement;
         }),
-        aggregateData: updatedData,
+        aggregateData: updatedAggregateData,
       };
 
-		case 'RENDERED':
-      return state;
+		case 'INIT':
+      state.elements.forEach((storeElement) => {
+        updateAggregateData(storeElement);
+      });
+      return {
+        elements: state.elements,
+        aggregateData: updatedAggregateData,
+      };
 
 		default:
 			return state;

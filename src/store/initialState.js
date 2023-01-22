@@ -3,6 +3,7 @@ const radioFieldDefaultSettings = {
 	value: '',
 	active: false,
 	checked: false,
+	valid: true,
 	disabled: false,
 };
 
@@ -29,7 +30,8 @@ export const initialState = {
 
 		{ name: 'ingredients', group: 'in', type: 'textarea', value: '' },
 
-		{ name: 'servings', group: 'out', category: 'volume', ...radioFieldDefaultSettings },
+		{ name: 'servings', group: 'out', category: 'volume', ...radioFieldDefaultSettings,
+			checked: true, value: '2' },
 		{ name: 'round_pan', group: 'out', category: 'pans', ...radioFieldDefaultSettings, disabled: true },
 		{ name: 'rect_pan', group: 'out', category: 'pans', ...radioFieldDefaultSettings, disabled: true },
 

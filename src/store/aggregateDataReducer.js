@@ -1,23 +1,38 @@
 export function aggregateDataReducer(state, element) {
   const updatedData = {};
-  if (element.type === 'radiofield') {
+
+  if (element.type === 'radiofield' && element.checked) {
     if (element.group === 'in') {
-      updatedData.inputSize = element.value;
-      updatedData.inputShape = getShape(element.name, element.value);
-      updatedData.inputVolume = getVolume(updatedData.inputShape, element.value);
-      updatedData.outputSize = '';
-      updatedData.outputShape = '';
-      updatedData.outputVolume = 0;
+      if (element.valid) {
+        updatedData.inputSize = element.value;
+        updatedData.inputShape = getShape(element.name, element.value);
+        updatedData.inputVolume = getVolume(updatedData.inputShape, element.value);
+        updatedData.outputSize = '';
+        updatedData.outputShape = '';
+        updatedData.outputVolume = 0;
+      } else {
+        updatedData.inputSize = '';
+        updatedData.inputShape = '';
+        updatedData.inputVolume = 0;
+      }
     } else {
-      updatedData.outputSize = element.value;
-      updatedData.outputShape = getShape(element.name, element.value);
-      updatedData.outputVolume = getVolume(updatedData.outputShape, element.value);
+      if (element.valid) {
+        updatedData.outputSize = element.value;
+        updatedData.outputShape = getShape(element.name, element.value);
+        updatedData.outputVolume = getVolume(updatedData.outputShape, element.value);
+      } else {
+        updatedData.outputSize = '';
+        updatedData.outputShape = '';
+        updatedData.outputVolume = 0;
+      }
     }
-  } else if (element.type === 'textarea') {
+
+    updatedData.multiplier = getMultiplier(updatedData.inputVolume || state.inputVolume, updatedData.outputVolume);
+  }
+  if (element.type === 'textarea') {
     updatedData.inputRecipe = element.value;
   }
 
-  updatedData.multiplier = getMultiplier(updatedData.inputVolume || state.inputVolume, updatedData.outputVolume);
   return { ...state, ...updatedData };
 }
 
