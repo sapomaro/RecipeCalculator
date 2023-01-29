@@ -1,10 +1,11 @@
 import { StoreProvider as LocalStoreProvider } from './store';
-import { Note, RadioField, TextareaInput, TextareaOutput } from './components';
+import { ErrorBoundary, Note, RadioField, TextareaInput, TextareaOutput } from './components';
 
 export function RecipeCalculator() {
   return (
-    <LocalStoreProvider>
-      <div>
+    <ErrorBoundary>
+      <LocalStoreProvider>
+
         <h1>Калькулятор ингредиентов и форм для выпечки</h1>
 
         <h2>Для чего он нужен и как работает</h2>
@@ -13,9 +14,11 @@ export function RecipeCalculator() {
           а вы хотите приготовить в два раза меньше. Либо в инструкции указана 
           большая круглая форма для выпечки, а у вас есть только маленькая 
           квадратная, и нужно пересчитать количество ингредиентов, чтобы торт 
-          получился такой же высоты. Для всех подобных случаев и создан этот 
+          получился такой же высоты. Для подобных случаев и создан этот 
           кулинарный калькулятор.
         </p>
+
+        <hr />
 
         <h2>Шаг №1: укажите исходные данные из рецепта</h2>
 
@@ -28,6 +31,8 @@ export function RecipeCalculator() {
         <h3>Ингредиенты:</h3>
 
         <TextareaInput name="ingredients" group="in" />
+
+        <hr />
 
         <h2>Шаг №2: укажите желаемые параметры для пересчёта</h2>
 
@@ -42,7 +47,8 @@ export function RecipeCalculator() {
         <TextareaOutput name="ingredients" group="out" />
 
         <Note name="summary" group="out" />
-      </div>
-    </LocalStoreProvider>
+
+      </LocalStoreProvider>
+    </ErrorBoundary>
   );
 }
