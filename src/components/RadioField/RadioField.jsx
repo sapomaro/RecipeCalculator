@@ -56,7 +56,7 @@ export function RadioField({ name, group }) {
   const handleInput = (event) => {
 		let value = event.target.value;
 		if (name === 'rect_pan') {
-			value = value.replace(/^([0-9,\.]+)[^0-9,\.]+([0-9,\.]*)$/, "$1×$2");
+			value = value.replace(/^([0-9,.]+)[^0-9,.]+([0-9,.]*)$/, "$1×$2");
 		}
 		dispatch({ action: 'TYPED', name, group, value });
   };
@@ -64,7 +64,7 @@ export function RadioField({ name, group }) {
   const handleBlur = (event) => {
 		let value = event.target.value;
 		if (name === 'rect_pan') {
-			if (value.match(/^[0-9]+[,\.]?[0-9]*$/)) {
+			if (value.match(/^[0-9]+[,.]?[0-9]*$/)) {
 				value = `${value}×${value}`.slice(0, maxLength);
 			}
 		}
