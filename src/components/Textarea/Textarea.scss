@@ -1,40 +1,40 @@
-.textarea__wrapper {
+.recipe-calculator__textarea {
 	margin: 2rem 0 0 0;
 	position: relative;
 	border-radius: 5px;
-	background: #fcfcfc;
-}
+	background: #fafafa;
 
-.textarea__input {
-	position: relative;
-	z-index: 2;
-	display: block;
-	box-sizing: border-box; 
-	min-width: 20rem;
-	width: 100%;
-	min-height: 10rem;
-	margin: 0 0 1.3rem 0;
-	padding: 1rem;
-	overflow: hidden; 
-	overflow-wrap: break-word;
-	font: 1.1rem/1 monospace;
-	border: 2px solid #ddd;
-	border-radius: 5px;
-	background: transparent;
-	outline: none;
-	resize: none;
-}
+	&__input {
+		position: relative;
+		z-index: 2;
+		display: block;
+		box-sizing: border-box; 
+		min-width: 20rem;
+		width: 100%;
+		min-height: 10rem;
+		margin: 0 0 1.3rem 0;
+		padding: 1rem;
+		overflow: hidden; 
+		overflow-wrap: break-word;
+		font: 1.1rem/1 monospace;
+		border: 2px solid #ddd;
+		border-radius: 5px;
+		background: transparent;
+		outline: none;
+		resize: none;
+	}
 
-.textarea__placeholder {
-	position: absolute;
-	z-index: 1;
-	border: 2px solid transparent;
-	padding: 1rem;
-	color: #999;
-}
+	&__placeholder {
+		position: absolute;
+		z-index: 1;
+		border: 2px solid transparent;
+		padding: 1rem;
+		color: #999;
+	}
 
-.textarea__input:hover,
-.textarea__input:focus {
-	border-color: #555;
-	transition: all 0.1s ease-in;
+	&__input:hover,
+	&__input:focus {
+		border-color: #747;
+		transition: all 0.1s ease-in;
+	}
 }

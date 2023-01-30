@@ -22,7 +22,7 @@ export function RadioField({ name, group }) {
 
   const label =
     (name === 'servings') ? 'Количество\nпорций' :
-    (name === 'round_pan') ? 'Круглая форма' :
+    (name === 'round_pan') ? 'Круглая\nформа' :
     (name === 'rect_pan') ? ' Квадратная ∕\nпрямоугольная\nформа' :
     '';
 
@@ -91,9 +91,11 @@ export function RadioField({ name, group }) {
     }
   });
 
+  const c = 'recipe-calculator__radiofield';
+
   return (
-		<div className="radiofield" key={id} title={hintIfDisabled}>
-			<input type="radio" className="radiofield__input_radio"
+		<div className={`${c}`} key={id} title={hintIfDisabled}>
+			<input type="radio" className={`${c}__input_radio`}
         id={id}
 				ref={radioRef}
 				checked={checked}
@@ -101,16 +103,16 @@ export function RadioField({ name, group }) {
         onChange={handleCheck}
 			/>
 
-			<label className="radiofield__content"
+			<label className={`${c}__content`}
         htmlFor={id}
         onClick={handleCheck}
       >
-				<span className={`radiofield__shape radiofield__shape_${name}`}>
-          <span className="radiofield__sublabel">
+				<span className={`${c}__shape ${c}__shape_${name}`}>
+          <span className={`${c}__sublabel`}>
             {!hasError ? sublabelTopNormal : sublabelTopError}
           </span>
 
-					<input type="text" className="radiofield__input_text" 
+					<input type="text" className={`${c}__input_text`} 
 						ref={fieldRef}
 						maxLength={maxLength}
 						value={disabled ? disabledValue : (checked ? value : blurredValue)}
@@ -121,12 +123,12 @@ export function RadioField({ name, group }) {
 						disabled={disabled}
 					/>
 
-          <span className="radiofield__sublabel">
+          <span className={`${c}__sublabel`}>
             {!hasError ? sublabelBottomNormal : sublabelBottomError}
           </span>
 				</span>
 
-				<span className="radiofield__label">
+				<span className={`${c}__label`}>
           {label}
         </span>
 			</label>

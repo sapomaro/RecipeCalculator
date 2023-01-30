@@ -15,11 +15,11 @@ export function Textarea(props) {
 	});
 
   return (
-    <div className="textarea__wrapper">
-      <div className="textarea__placeholder">
+    <div className="recipe-calculator__textarea">
+      <div className="recipe-calculator__textarea__placeholder">
         {value === '' ? placeholder : ''}
       </div>
-      <textarea className="textarea__input" 
+      <textarea className="recipe-calculator__textarea__input" 
         ref={textareaRef}
         value={value}
         onPaste={onPaste}
