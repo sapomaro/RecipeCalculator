@@ -9,10 +9,19 @@ export function multiplyRecipeNumbers(text, multiplier) {
     let entry = line;
 
     // find all numbers/floats without trailing %
-    const regex = /(\d+\.?\d*)(?!\d*\s?-?\s?\d*\s?%)/g;
+    const regex = /(\d+\.?\d*)(?!\d*\.?\d*\s?-?\s?\d*\.?\d*\s?%)/g;
 
     while (matches = regex.exec(entry)) {
-      const oldQuantity = parseFloat(matches[1]);
+      const matchedNumber = matches[1];
+      if (typeof matchedNumber === 'undefined') {
+        continue;
+      }
+
+      const oldQuantity = parseFloat(matchedNumber);
+      if (isNaN(oldQuantity)) {
+        continue;
+      }
+
       let newQuantity = oldQuantity * multiplier;
 
       if (newQuantity > 20) {
@@ -29,11 +38,11 @@ export function multiplyRecipeNumbers(text, multiplier) {
         newQuantity = (microQuantity === 0 ? newQuantity : microQuantity); 
       }
 
-      let index = regex.lastIndex - matches[1].length;
+      let index = regex.lastIndex - matchedNumber.length;
       entry = entry.slice(0, index) +
-        entry.slice(index).replace(matches[1].replace('.', '\.'), newQuantity.toString(10));
+        entry.slice(index).replace(matchedNumber.replace('.', '\.'), newQuantity.toString(10));
 
-      regex.lastIndex += newQuantity.toString().length - matches[1].length;
+      regex.lastIndex += newQuantity.toString().length - matchedNumber.length;
     }
 
     return entry;
