@@ -1,4 +1,6 @@
+@import '../../constants/colors.scss';
+
 .recipe-calculator__note {
 	font-style: italic;
-	color: #777;
+	color: $color-neutral-500;
 }

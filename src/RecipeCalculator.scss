@@ -1,10 +1,12 @@
+@import './constants/colors.scss';
+
 .recipe-calculator {
   h1, h2, h3, h4, h5, h6 {
     margin: 2rem 0;
   }
 
   h1 {
-    color: #747;
+    color: $color-brand-600;
   }
 
   p {
@@ -23,6 +25,6 @@
     height: 0;
     margin: 3rem 0;
     border: none;
-    border-top: 2px solid #ddd;
+    border-top: 2px solid $color-neutral-100;
   }
 }
