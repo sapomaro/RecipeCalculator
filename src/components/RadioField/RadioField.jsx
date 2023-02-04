@@ -44,7 +44,7 @@ export function RadioField({ name, group }) {
     '';
 
   const handleCheck = () => {
-    if (!disabled) {
+    if (!disabled && !active && !checked) {
       dispatch({ action: 'CHECKED', name, group, category });
     }
 

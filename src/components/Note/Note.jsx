@@ -3,34 +3,34 @@ import { aggregateDataSelector, useStoreDispatch, useStoreSelector } from '../..
 
 import './Note.scss';
 
+function getSizeInfo(shape, size) {
+  if (!shape || !size) {
+    return '';
+  }
+
+  switch (shape) {
+    case 'servings':
+      return `порции, ${size} ед.`;
+    case 'round':
+      return `круглая форма, ${size} см в диаметре`;
+    case 'rectangle':
+      return `прямоугольная форма, ${size} см по длине и ширине`;
+    case 'square': 
+      return `квадратная форма, ${size} см по длине и ширине`;
+    default:
+      return '';
+  }
+}
+
 export function Note() {
   const data = useStoreSelector(aggregateDataSelector);
   const dispatch = useStoreDispatch();
 
   const { inputShape, inputSize, multiplier, outputShape, outputSize } = data;
 
-	const getSizeInfo = (shape, size) => {
-		if (!shape || !size) {
-      return '';
-    }
-
-		switch (shape) {
-			case 'servings':
-        return `порции, ${size} ед.`;
-			case 'round':
-        return `круглая форма, ${size} см в диаметре`;
-			case 'rectangle':
-        return `прямоугольная форма, ${size} см по длине и ширине`;
-      case 'square': 
-				return `квадратная форма, ${size} см по длине и ширине`;
-      default:
-        return '';
-		}
-	};
-
   useEffect(() => {
     dispatch({ action: 'INIT' });
-  }, []);
+  }, [dispatch]);
 
   return (
 		<div className="recipe-calculator__note">
