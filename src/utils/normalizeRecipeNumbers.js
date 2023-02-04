@@ -1,33 +1,32 @@
-function re(regexp, flags = 'gi') {
-  return new RegExp(regexp, flags); 
-}
+import { multireplace, re } from './regexpUtils';
 
 const startGroup = '(^|\\s|[-.])';
 
 const endGroup = '([-,.!:;)]|\\s|$)';
 
 const numberVariantsReplacements = [
+  /* eslint-disable no-useless-concat */
   [/Ё/g, 'Е'], [/ё/g, 'е'],
   [/(\d)-(й|х|ух|ех|ти)(\s|$)/gi, '$1$3'],
 
-  [re(startGroup + '(1\/2|половин[ауе]|с половиной|одн[ау] втор[аяую])' + endGroup), '$1'+'0.5'+'$3'],
-  [re(startGroup + '(1\/4|одн[ау] четверть|четверть)' + endGroup), '$1'+'0.25'+'$3'],
-  [re(startGroup + '(3\/4|три четверти)' + endGroup), '$1'+'0.75'+'$3'],
-  [re(startGroup + '(1\/7|одн[ау] седьм[аяую])' + endGroup), '$1'+'0.14'+'$3'],
-  [re(startGroup + '(1\/9|одн[ау] девят[аяую])' + endGroup), '$1'+'0.11'+'$3'],
-  [re(startGroup + '(1\/10|одн[ау] десят[аяую]|десят[аяую])' + endGroup), '$1'+'0.1'+'$3'],
-  [re(startGroup + '(1\/3|одн[ау] треть|треть)' + endGroup), '$1'+'0.33'+'$3'],
-  [re(startGroup + '(2\/3|две трети)' + endGroup), '$1'+'0.66'+'$3'],
-  [re(startGroup + '(1\/5|одн[ау] пят[аяую])' + endGroup), '$1'+'0.2'+'$3'],
-  [re(startGroup + '(2\/5|две пятых)' + endGroup), '$1'+'0.4'+'$3'],
-  [re(startGroup + '(3\/5|три пятых)' + endGroup), '$1'+'0.6'+'$3'],
-  [re(startGroup + '(4\/5|четыре пятых)' + endGroup), '$1'+'0.8'+'$3'],
-  [re(startGroup + '(1\/6|одн[ау] шест[аяую])' + endGroup), '$1'+'0.17'+'$3'],
-  [re(startGroup + '(5\/6|пять шестых)' + endGroup), '$1'+'0.83'+'$3'],
-  [re(startGroup + '(1\/8|одн[ау] восьм[аяую])' + endGroup), '$1'+'0.125'+'$3'],
-  [re(startGroup + '(3\/8|три восьмых)' + endGroup), '$1'+'0.375'+'$3'],
-  [re(startGroup + '(5\/8|пять восьмых)' + endGroup), '$1'+'0.625'+'$3'],
-  [re(startGroup + '(7\/8|семь восьмых)' + endGroup), '$1'+'0.875'+'$3'],
+  [re(startGroup + '(1/2|половин[ауе]|с половиной|одн[ау] втор[аяую])' + endGroup), '$1'+'0.5'+'$3'],
+  [re(startGroup + '(1/4|одн[ау] четверть|четверть)' + endGroup), '$1'+'0.25'+'$3'],
+  [re(startGroup + '(3/4|три четверти)' + endGroup), '$1'+'0.75'+'$3'],
+  [re(startGroup + '(1/7|одн[ау] седьм[аяую])' + endGroup), '$1'+'0.14'+'$3'],
+  [re(startGroup + '(1/9|одн[ау] девят[аяую])' + endGroup), '$1'+'0.11'+'$3'],
+  [re(startGroup + '(1/10|одн[ау] десят[аяую]|десят[аяую])' + endGroup), '$1'+'0.1'+'$3'],
+  [re(startGroup + '(1/3|одн[ау] треть|треть)' + endGroup), '$1'+'0.33'+'$3'],
+  [re(startGroup + '(2/3|две трети)' + endGroup), '$1'+'0.66'+'$3'],
+  [re(startGroup + '(1/5|одн[ау] пят[аяую])' + endGroup), '$1'+'0.2'+'$3'],
+  [re(startGroup + '(2/5|две пятых)' + endGroup), '$1'+'0.4'+'$3'],
+  [re(startGroup + '(3/5|три пятых)' + endGroup), '$1'+'0.6'+'$3'],
+  [re(startGroup + '(4/5|четыре пятых)' + endGroup), '$1'+'0.8'+'$3'],
+  [re(startGroup + '(1/6|одн[ау] шест[аяую])' + endGroup), '$1'+'0.17'+'$3'],
+  [re(startGroup + '(5/6|пять шестых)' + endGroup), '$1'+'0.83'+'$3'],
+  [re(startGroup + '(1/8|одн[ау] восьм[аяую])' + endGroup), '$1'+'0.125'+'$3'],
+  [re(startGroup + '(3/8|три восьмых)' + endGroup), '$1'+'0.375'+'$3'],
+  [re(startGroup + '(5/8|пять восьмых)' + endGroup), '$1'+'0.625'+'$3'],
+  [re(startGroup + '(7/8|семь восьмых)' + endGroup), '$1'+'0.875'+'$3'],
 
   [re(startGroup + '(один|одного|одна|одной|одну|одно)' + endGroup), '$1'+'1'+'$3'],
   [re(startGroup + '(полтора)' + endGroup), '$1'+'1.5'+'$3'],
@@ -41,7 +40,7 @@ const numberVariantsReplacements = [
   [re(startGroup + '(девять|девяти)' + endGroup), '$1'+'9'+'$3'],
   [re(startGroup + '(десять|десяти)' + endGroup), '$1'+'10'+'$3'],
 
-  // пробел перед 0 нужен, чтобы дробные значения не смешивались с целыми (при их наличии)
+  // пробел перед 0 нужен, чтобы дробные значения не смешивались с предшествующими целыми (при их наличии)
   [/½/g, ' 0.5'],
   [/¼/g, ' 0.25'],
   [/¾/g, ' 0.75'],
@@ -80,6 +79,7 @@ const numberVariantsReplacements = [
 
   [/ /g, ''],
   [/\(\s(\d)/g, '($1'],
+  /* eslint-enable no-useless-concat */
 ];
 
 export function normalizeRecipeNumbers(text, lang = 'ru') {
@@ -87,10 +87,5 @@ export function normalizeRecipeNumbers(text, lang = 'ru') {
     return '';
   }
 
-  for (const [regexp, replacement] of numberVariantsReplacements) {
-    regexp.lastIndex = 0;
-    text = text.replace(regexp, replacement);
-  }
-
-	return text; //.trim() //.toLowerCase()
+	return multireplace(text, numberVariantsReplacements);
 }

@@ -1,17 +1,18 @@
-export function multiplyRecipeNumbers(text, multiplier) {
+// find all numbers/floats without trailing %
+const regexp = /(\d+\.?\d*)(?!\d*\.?\d*\s?-?\s?\d*\.?\d*\s?%)/g;
 
+export function multiplyRecipeNumbers(text, multiplier) {
   return text.split(/\n+/).map((line) => {
     if (line === '') {
-      return;
+      return '';
     }
 
     let matches;
     let entry = line;
 
-    // find all numbers/floats without trailing %
-    const regex = /(\d+\.?\d*)(?!\d*\.?\d*\s?-?\s?\d*\.?\d*\s?%)/g;
-
-    while (matches = regex.exec(entry)) {
+    regexp.lastIndex = 0;
+    // eslint-disable-next-line no-cond-assign
+    while (matches = regexp.exec(entry)) {
       const matchedNumber = matches[1];
       if (typeof matchedNumber === 'undefined') {
         continue;
@@ -38,11 +39,12 @@ export function multiplyRecipeNumbers(text, multiplier) {
         newQuantity = (microQuantity === 0 ? newQuantity : microQuantity); 
       }
 
-      let index = regex.lastIndex - matchedNumber.length;
-      entry = entry.slice(0, index) +
+      let index = regexp.lastIndex - matchedNumber.length;
+
+      entry = entry.slice(0, index) + // eslint-disable-next-line no-useless-escape
         entry.slice(index).replace(matchedNumber.replace('.', '\.'), newQuantity.toString(10));
 
-      regex.lastIndex += newQuantity.toString().length - matchedNumber.length;
+      regexp.lastIndex += newQuantity.toString().length - matchedNumber.length;
     }
 
     return entry;
