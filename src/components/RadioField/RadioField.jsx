@@ -36,6 +36,10 @@ export function RadioField({ name, group }) {
   const [sublabelTopError, sublabelBottomError] =
     ['⚠ Неверное', 'значение'];
 
+  const empty = (value === '');
+  const [sublabelTopEmpty, sublabelBottomEmpty] =
+    ['⚠ Укажите', 'значение'];
+
   const hintIfDisabled =
     (disabled && category === 'pans') ? 'Нельзя пересчитать размеры формы для выпечки в количество порций. ' +
       'Если вам нужны именно порции, выберите соответствующую опцию выше в шаге №1.' :
@@ -44,7 +48,7 @@ export function RadioField({ name, group }) {
     '';
 
   const handleCheck = () => {
-    if (!disabled && !active && !checked) {
+    if (!disabled && !active) {
       dispatch({ action: 'CHECKED', name, group, category });
     }
 
@@ -68,7 +72,6 @@ export function RadioField({ name, group }) {
 				value = `${value}×${value}`.slice(0, maxLength);
 			}
 		}
-
     dispatch({ action: 'BLURRED', name, group, value });
   };
 
@@ -80,8 +83,7 @@ export function RadioField({ name, group }) {
     if (!hasError) {
       fieldRef.current.setCustomValidity('');
       radioRef.current.setCustomValidity('');
-    }
-    else {
+    } else {
       fieldRef.current.setCustomValidity('invalid');
       radioRef.current.setCustomValidity('invalid');
     }
@@ -92,10 +94,11 @@ export function RadioField({ name, group }) {
   });
 
   const c = 'recipe-calculator__radiofield';
+  const emptySelector = (empty) ? `${c}__input_radio_empty` : '';
 
   return (
 		<div className={`${c}`} key={id} title={hintIfDisabled}>
-			<input type="radio" className={`${c}__input_radio`}
+			<input type="radio" className={`${c}__input_radio ${emptySelector}`}
         id={id}
 				ref={radioRef}
 				checked={checked}
@@ -109,7 +112,7 @@ export function RadioField({ name, group }) {
       >
 				<span className={`${c}__shape ${c}__shape_${name}`}>
           <span className={`${c}__sublabel`}>
-            {!hasError ? sublabelTopNormal : sublabelTopError}
+            {!hasError ? sublabelTopNormal : empty ? sublabelTopEmpty : sublabelTopError}
           </span>
 
 					<input type="text" className={`${c}__input_text`} 
@@ -124,7 +127,7 @@ export function RadioField({ name, group }) {
 					/>
 
           <span className={`${c}__sublabel`}>
-            {!hasError ? sublabelBottomNormal : sublabelBottomError}
+            {!hasError ? sublabelBottomNormal : empty ? sublabelBottomEmpty : sublabelBottomError}
           </span>
 				</span>
 

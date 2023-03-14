@@ -121,13 +121,26 @@
 
   #{$c}__input_radio:invalid + #{$c}__content {
     #{$c}__shape { 
-      border-color: $color-error-500 !important; 
+      border-color: $color-error-800 !important; 
       transition: all 0.1s ease-in;
     }
 
     #{$c}__label,
     #{$c}__sublabel { 
-      color: $color-error-500 !important; 
+      color: $color-error-800 !important; 
+      transition: all 0.1s ease-in;
+    }
+  }
+
+  #{$c}__input_radio_empty:invalid + #{$c}__content {
+    #{$c}__shape { 
+      border-color: $color-error-300 !important; 
+      transition: all 0.1s ease-in;
+    }
+
+    #{$c}__label,
+    #{$c}__sublabel { 
+      color: $color-error-300 !important; 
       transition: all 0.1s ease-in;
     }
   }
