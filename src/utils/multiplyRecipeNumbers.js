@@ -1,4 +1,4 @@
-// find all numbers/floats without trailing %
+// ищет все числа (включая дробные) без последующего знака %
 const regexp = /(\d+\.?\d*)(?!\d*\.?\d*\s?-?\s?\d*\.?\d*\s?%)/g;
 
 export function multiplyRecipeNumbers(text, multiplier) {
