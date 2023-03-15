@@ -3,8 +3,12 @@
 .recipe-calculator__radiofield {
 	$c: &;
   display: inline-block;
-  margin: 1rem 3rem 1rem 0;
+  margin: 1rem 1.5rem 1rem 0;
   vertical-align: top;
+
+  #{$c}:last-child {
+    margin-right: 0;
+  }
 
   #{$c}__input_radio {
     display: none;
@@ -18,6 +22,7 @@
   #{$c}__label {
     display: block;
     margin: 1rem 0 0 0;
+    font-size: 0.9rem;
     text-align: center;
     white-space: pre-wrap;
     color: $color-neutral-500;
@@ -27,9 +32,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 7rem; 
-    height: 7rem;
-    padding: 1rem;
+    width: 6rem; 
+    height: 6rem;
+    padding: 0.5rem;
     border: 4px solid $color-neutral-500; 
     background: $color-neutral-050;
   }
@@ -45,7 +50,7 @@
 
   #{$c}__input_text {
     flex: 3;
-    font-size: 1.7rem;
+    font-size: 1.4rem;
     border: none;
     text-align: center;
     background: transparent;
@@ -60,7 +65,7 @@
     flex: 1;
     color: $color-neutral-400;
     font-size: 0.8rem;
-    letter-spacing: -0.5px;
+    letter-spacing: -1px;
   }
 
   #{$c}__content:hover {
@@ -103,6 +108,11 @@
   #{$c}__input_radio:disabled + #{$c}__content {
     cursor: not-allowed;
 
+    &:active {
+      animation: swing 0.2s ease;
+      animation-iteration-count: 1;
+    }
+
     #{$c}__shape {
       border-color: $color-neutral-200;
     }
@@ -144,4 +154,13 @@
       transition: all 0.1s ease-in;
     }
   }
+}
+
+@keyframes swing {
+  15% { transform: translateX(3px); }
+  30% { transform: translateX(-3px); }
+  50% { transform: translateX(2px); }
+  65% { transform: translateX(-2px); }
+  80% { transform: translateX(1px); }
+  100% { transform: translateX(0); }
 }

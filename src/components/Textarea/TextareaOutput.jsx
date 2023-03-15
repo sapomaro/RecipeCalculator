@@ -11,7 +11,7 @@ export function TextareaOutput() {
   value = multiplyRecipeNumbers(value, multiplier);
   value = fixRecipeWordForms(value);
 
-  const placeholder = `Здесь появится обновлённый список ингредиентов, когда вы укажете необходимые данные выше ⬆`;
+  const placeholder = `Здесь появится обновлённый список ингредиентов, когда вы укажете необходимые данные`;
 
   return (
     <Textarea

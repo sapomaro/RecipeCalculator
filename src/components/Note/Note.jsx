@@ -41,13 +41,13 @@ export function Note() {
 
       <p>Исходные данные из рецепта:&ensp;
         <b>
-          {getSizeInfo(inputShape, inputSize) || <a href="#step1-recipe-measures">укажите выше ⬆</a>}
+          {getSizeInfo(inputShape, inputSize) || <a href="#step1-recipe-measures">укажите выше&nbsp;⬆</a>}
         </b>
       </p>
 
       <p>Желаемые параметры для пересчёта:&ensp;
         <b>
-          {getSizeInfo(outputShape, outputSize) || <a href="#step2-recipe-measures">укажите выше ⬆</a>}
+          {getSizeInfo(outputShape, outputSize) || <a href="#step2-recipe-measures">укажите выше&nbsp;⬆</a>}
         </b>
       </p>
 
