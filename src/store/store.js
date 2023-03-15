@@ -1,13 +1,31 @@
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useEffect, useReducer } from 'react';
 
 import { reducer } from './reducer';
 import { initialState } from './initialState';
 
 const StoreElementsStateContext = createContext(null);
 const StoreDispatchContext = createContext(null);
+const localStorageStateKey = 'recipeCalculatorState';
+
+function stateInitializer(initialValue = initialState) {
+  try {
+    return JSON.parse(localStorage.getItem(localStorageStateKey)) || initialValue;
+  } catch (error) {
+    console.warn(error);
+    return initialValue;
+  }
+}
 
 export function StoreProvider({ children }) {
-  const [currentState, dispatch] = useReducer(reducer, initialState);
+  const [currentState, dispatch] = useReducer(reducer, initialState, stateInitializer);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(localStorageStateKey, JSON.stringify(currentState));
+    } catch (error) {
+      console.warn(error);
+    }
+  }, [currentState]);
 
   return (
     <StoreElementsStateContext.Provider value={currentState}>
