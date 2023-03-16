@@ -1,5 +1,5 @@
 import { StoreProvider as LocalStoreProvider } from './store';
-import { ErrorBoundary, Note, RadioField, TextareaInput, TextareaOutput } from './components';
+import { ClearButton, ErrorBoundary, Note, RadioField, TextareaInput, TextareaOutput } from './components';
 
 import './RecipeCalculator.scss';
 
@@ -44,6 +44,10 @@ export function RecipeCalculator() {
             <h3>Исходные ингредиенты:</h3>
 
             <TextareaInput name="ingredients" group="in" />
+
+            <p className="align_right">
+              <ClearButton name="clear" group="in" />
+            </p>
           </section>
 
           <section className="recipe-calculator__section">
