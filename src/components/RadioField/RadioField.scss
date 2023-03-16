@@ -107,6 +107,7 @@
 
   #{$c}__input_radio:disabled + #{$c}__content {
     cursor: not-allowed;
+    user-select: none;
 
     &:active {
       animation: swing 0.2s ease;
@@ -126,6 +127,7 @@
     #{$c}__input_text {
       color: $color-neutral-200;
       cursor: not-allowed;
+      pointer-events: none;
     }
   }
 

@@ -48,6 +48,9 @@ export function RadioField({ name, group }) {
     '';
 
   const handleCheck = () => {
+    if (value === blurredValue) {
+      dispatch({ action: 'TYPED', name, group, value: '' });
+    }
     if (!disabled && !active) {
       dispatch({ action: 'CHECKED', name, group, category });
     }
