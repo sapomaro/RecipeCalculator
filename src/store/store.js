@@ -7,6 +7,10 @@ const StoreElementsStateContext = createContext(null);
 const StoreDispatchContext = createContext(null);
 const localStorageStateKey = 'recipeCalculatorState';
 
+export function clearState() {
+  localStorage.removeItem(localStorageStateKey);
+}
+
 function stateInitializer(initialValue = initialState) {
   try {
     return JSON.parse(localStorage.getItem(localStorageStateKey)) || initialValue;
