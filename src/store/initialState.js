@@ -38,5 +38,7 @@ export const initialState = {
 		{ name: 'ingredients', group: 'out', type: 'textarea', value: '' },
 
 		{ name: 'summary', group: 'out', type: 'note', value: '' },
+
+		{ name: 'clear', group: 'in', type: 'button', value: '' }
 	],
 };

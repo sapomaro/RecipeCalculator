@@ -1,77 +1,70 @@
 import { aggregateDataReducer } from './aggregateDataReducer';
 import { elementValidationReducer } from './elementValidationReducer';
 
-export function reducer(state, actionElement) {
+function updateStoreElements(state, callback) {
   let updatedAggregateData = state.aggregateData;
 
-  const updateAggregateData = (storeElement) => {
-    updatedAggregateData = aggregateDataReducer(updatedAggregateData, storeElement);
+  return {
+    elements: state.elements.map((storeElement) => {
+      storeElement = callback(storeElement);
+      storeElement.valid = elementValidationReducer(storeElement);
+      updatedAggregateData = aggregateDataReducer(updatedAggregateData, storeElement);
+      return storeElement;
+    }),
+    aggregateData: updatedAggregateData,
   };
+}
 
+export function reducer(state, actionElement) {
 	switch (actionElement.action) {
 		case 'CHECKED':
-			return {
-        elements: state.elements.map((storeElement) => {
-          if (storeElement.type === 'radiofield') {
-            if (storeElement.group === actionElement.group) {
-              if (storeElement.name === actionElement.name) {
-                storeElement = { ...storeElement, checked: true, active: true };
-              } else {
-                storeElement = { ...storeElement, checked: false, active: false };
-              }
-            } else if (storeElement.group === 'out') {
-              if (storeElement.category === actionElement.category) {
-                storeElement = { ...storeElement, disabled: false };
-              } else {
-                storeElement = { ...storeElement, checked: false, disabled: true };
-              }
+			return updateStoreElements(state, (storeElement) => {
+        if (storeElement.type === 'radiofield') {
+          if (storeElement.group === actionElement.group) {
+            if (storeElement.name === actionElement.name) {
+              return { ...storeElement, checked: true, active: true };
+            } else {
+              return { ...storeElement, checked: false, active: false };
+            }
+          } else if (storeElement.group === 'out') {
+            if (storeElement.category === actionElement.category) {
+              return { ...storeElement, disabled: false };
+            } else {
+              return { ...storeElement, checked: false, disabled: true };
             }
           }
-
-          storeElement.valid = elementValidationReducer(storeElement);
-          updateAggregateData(storeElement);
-
-          return storeElement;
-        }),
-        aggregateData: updatedAggregateData,
-      };
+        }
+        return storeElement;
+      });
 
 		case 'BLURRED':
-			return {
-        elements: state.elements.map((storeElement) => {
-          if (storeElement.type === 'radiofield') {
-            if (storeElement.name === actionElement.name && storeElement.group === actionElement.group) {
-              storeElement = { ...storeElement, active: false, value: actionElement.value };
-              storeElement.valid = elementValidationReducer(storeElement);
-            }
-          }
-          updateAggregateData(storeElement);
-          return storeElement;
-        }),
-        aggregateData: updatedAggregateData,
-      };
+			return updateStoreElements(state, (storeElement) => {
+        if (storeElement.type === 'radiofield' &&
+            storeElement.name === actionElement.name &&
+            storeElement.group === actionElement.group) {
+          return { ...storeElement, active: false, value: actionElement.value };
+        }
+        return storeElement;
+      });
 
 		case 'TYPED':
-			return {
-        elements: state.elements.map((storeElement) => {
-          if (storeElement.name === actionElement.name && storeElement.group === actionElement.group) {
-            storeElement = { ...storeElement, value: actionElement.value };
-            storeElement.valid = elementValidationReducer(storeElement);
-          }
-          updateAggregateData(storeElement);
-          return storeElement;
-        }),
-        aggregateData: updatedAggregateData,
-      };
+			return updateStoreElements(state, (storeElement) => {
+        if (storeElement.name === actionElement.name && storeElement.group === actionElement.group) {
+          return { ...storeElement, value: actionElement.value };
+        }
+        return storeElement;
+      });
+
+    case 'CLEAR':
+      return updateStoreElements(state, (storeElement) => {
+        if (storeElement.type === 'textarea' && storeElement.group === 'in') {
+          return { ...storeElement, value: '' };
+        }
+        return storeElement;
+      });
 
 		case 'INIT':
-      state.elements.forEach((storeElement) => {
-        updateAggregateData(storeElement);
-      });
-      return {
-        elements: state.elements,
-        aggregateData: updatedAggregateData,
-      };
+      return updateStoreElements(state, (storeElement) => storeElement);
 
 		default:
 			return state;
