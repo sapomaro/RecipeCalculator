@@ -6,10 +6,12 @@ function updateStoreElements(state, callback) {
 
   return {
     elements: state.elements.map((storeElement) => {
-      storeElement = callback(storeElement);
-      storeElement.valid = elementValidationReducer(storeElement);
-      updatedAggregateData = aggregateDataReducer(updatedAggregateData, storeElement);
-      return storeElement;
+      const updatedStoreElement = callback(storeElement);
+      if (updatedStoreElement !== storeElement) {
+        updatedStoreElement.valid = elementValidationReducer(updatedStoreElement);
+        updatedAggregateData = aggregateDataReducer(updatedAggregateData, updatedStoreElement);
+      }
+      return updatedStoreElement;
     }),
     aggregateData: updatedAggregateData,
   };
@@ -49,16 +51,41 @@ export function reducer(state, actionElement) {
 
 		case 'TYPED':
 			return updateStoreElements(state, (storeElement) => {
-        if (storeElement.name === actionElement.name && storeElement.group === actionElement.group) {
-          return { ...storeElement, value: actionElement.value };
+        if (storeElement.group === actionElement.group) {
+          if (storeElement.name === actionElement.name) {
+            return { ...storeElement, value: actionElement.value };
+          }
+          if (storeElement.name === 'clear') {
+            return { ...storeElement, value: '' };
+          }
         }
         return storeElement;
       });
 
     case 'CLEAR':
+      let previousValue = '';
       return updateStoreElements(state, (storeElement) => {
-        if (storeElement.type === 'textarea' && storeElement.group === 'in') {
-          return { ...storeElement, value: '' };
+        if (storeElement.group === 'in') {
+          if (storeElement.type === 'textarea') {
+            previousValue = storeElement.value;
+            return { ...storeElement, value: '', previousValue };
+          }
+          if (storeElement.name === 'clear' && previousValue !== '') {
+            return { ...storeElement, value: 'restore' };
+          }
+        }
+        return storeElement;
+      });
+
+    case 'RESTORE':
+      return updateStoreElements(state, (storeElement) => {
+        if (storeElement.group === 'in') {
+          if (storeElement.type === 'textarea' && storeElement.previousValue) {
+            return { ...storeElement, value: storeElement.previousValue, previousValue: '' };
+          }
+          if (storeElement.name === 'clear') {
+            return { ...storeElement, value: '' };
+          }
         }
         return storeElement;
       });

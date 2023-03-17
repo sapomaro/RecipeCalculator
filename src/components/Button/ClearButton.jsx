@@ -8,12 +8,16 @@ export function ClearButton({ name, group }) {
   const { value } = state;
 
   const clearLabel = '⌦ Очистить';
-  const cancelLabel = '↺ Вернуть обратно';
+  const cancelLabel = '↺ Вернуть';
 
   const label = (value === '') ? clearLabel : cancelLabel;
 
   const handleClick = () => {
-    dispatch({ action: 'CLEAR' });
+    if (value === '') {
+      dispatch({ action: 'CLEAR' });
+    } else {
+      dispatch({ action: 'RESTORE' });
+    }
   };
 
   return (

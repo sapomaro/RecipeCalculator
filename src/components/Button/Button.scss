@@ -10,6 +10,11 @@
 	background: $color-neutral-050;
 	cursor: pointer;
 
+	&:hover {
+		border-color: $color-neutral-800;
+		transition: all 0.1s ease-in;
+	}
+
 	&:enabled:active {
     transform: scale(0.98);
   }
