@@ -9,11 +9,10 @@ export function ClearButton({ name, group }) {
 
   const clearLabel = '⌦ Очистить';
   const cancelLabel = '↺ Вернуть';
-
-  const label = (value === '') ? clearLabel : cancelLabel;
+  const label = (value === 'clear') ? clearLabel : cancelLabel;
 
   const handleClick = () => {
-    if (value === '') {
+    if (value === 'clear') {
       dispatch({ action: 'CLEAR' });
     } else {
       dispatch({ action: 'RESTORE' });

@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Textarea } from './Textarea';
 import { elementSelector, useStoreDispatch, useStoreSelector } from '../../store';
 import { padRecipeNumbers } from '../../utils';
@@ -6,6 +6,7 @@ import { padRecipeNumbers } from '../../utils';
 export function TextareaInput({ name, group }) {
   const state = useStoreSelector(elementSelector({ name, group }));
   const dispatch = useStoreDispatch();
+  const textareaRef = useRef(null);
   const pastedRef = useRef(false);
 
   const { value } = state;
@@ -15,22 +16,29 @@ export function TextareaInput({ name, group }) {
   const pasteTimeout = 16;
 
   const handlePaste = useCallback(() => {
-		pastedRef.current = true;
-		setTimeout(() => { pastedRef.current = false; }, pasteTimeout);
+    pastedRef.current = true;
+    setTimeout(() => { pastedRef.current = false; }, pasteTimeout);
   }, [pastedRef]);
 
   const handleInput = useCallback((event) => {
     let value = event.target.value;
     if (pastedRef.current) {
-			value = padRecipeNumbers(value);
-		}
+      value = padRecipeNumbers(value);
+    }
     dispatch({ action: 'TYPED', name, group, value });
   }, [dispatch, pastedRef, name, group]);
+
+  useEffect(() => {
+    if (textareaRef.current && textareaRef.current !== document.activeElement) {
+      textareaRef.current.focus();
+    }
+  }, [value]);
 
   return (
     <Textarea
       value={value}
       placeholder={placeholder}
+      ref={textareaRef}
       onChange={handleInput}
       onPaste={handlePaste}
     />

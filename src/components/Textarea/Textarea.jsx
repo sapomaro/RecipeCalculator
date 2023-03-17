@@ -1,15 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { autoResize } from '../../utils';
 
 import './Textarea.scss';
 
-export function Textarea(props) {
-	const textareaRef = useRef(null);
-
+export const Textarea = forwardRef(function Textarea(props, textareaRef) {
   const { value, placeholder, readonly = false, onPaste = null, onChange = null } = props;
 
   useEffect(() => {
-		if (textareaRef.current) {
+		if (textareaRef && textareaRef.current) {
       autoResize(textareaRef.current);
     }
 	});
@@ -28,4 +26,4 @@ export function Textarea(props) {
       ></textarea>
     </div>
   );
-};
+});

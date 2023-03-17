@@ -9,8 +9,8 @@ function updateStoreElements(state, callback) {
       const updatedStoreElement = callback(storeElement);
       if (updatedStoreElement !== storeElement) {
         updatedStoreElement.valid = elementValidationReducer(updatedStoreElement);
-        updatedAggregateData = aggregateDataReducer(updatedAggregateData, updatedStoreElement);
       }
+      updatedAggregateData = aggregateDataReducer(updatedAggregateData, updatedStoreElement);
       return updatedStoreElement;
     }),
     aggregateData: updatedAggregateData,
@@ -56,7 +56,7 @@ export function reducer(state, actionElement) {
             return { ...storeElement, value: actionElement.value };
           }
           if (storeElement.name === 'clear') {
-            return { ...storeElement, value: '' };
+            return { ...storeElement, value: 'clear' };
           }
         }
         return storeElement;
@@ -84,7 +84,7 @@ export function reducer(state, actionElement) {
             return { ...storeElement, value: storeElement.previousValue, previousValue: '' };
           }
           if (storeElement.name === 'clear') {
-            return { ...storeElement, value: '' };
+            return { ...storeElement, value: 'clear' };
           }
         }
         return storeElement;

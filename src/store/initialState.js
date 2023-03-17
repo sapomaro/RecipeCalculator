@@ -39,6 +39,6 @@ export const initialState = {
 
 		{ name: 'summary', group: 'out', type: 'note', value: '' },
 
-		{ name: 'clear', group: 'in', type: 'button', value: '' }
+		{ name: 'clear', group: 'in', type: 'button', value: 'clear' }
 	],
 };
