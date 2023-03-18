@@ -26,7 +26,9 @@ export function padRecipeNumbers(text, lang = 'ru') {
     return '';
   }
 
+  const lineMaxLength = 35;
   let entryMaxLength = 0;
+  let endingMaxLength = 0;
 
   const countMaxLength = (line, regexp) => {
     line = line.trim();
@@ -37,6 +39,10 @@ export function padRecipeNumbers(text, lang = 'ru') {
       if (entry.length > entryMaxLength) {
         entryMaxLength = entry.length;
       }
+      let ending = matches[2] + matches[3].trim();
+      if (ending.length > endingMaxLength) {
+        endingMaxLength = ending.length;
+      }
     }
   };
 
@@ -46,6 +52,10 @@ export function padRecipeNumbers(text, lang = 'ru') {
   textArray.forEach((line) => {
     padFormulas.forEach((formula) => { countMaxLength(line, formula); });
   });
+
+  if ((entryMaxLength + endingMaxLength) > lineMaxLength) {
+    entryMaxLength = 0;
+  }
 
   textArray = textArray.map((line) => {
     if (entryMaxLength > 0) {
