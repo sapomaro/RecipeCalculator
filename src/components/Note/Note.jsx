@@ -10,13 +10,13 @@ function getSizeInfo(shape, size) {
 
   switch (shape) {
     case 'servings':
-      return `порции, ${size} ед.`;
+      return `порции, ${size}\u00A0ед.`;
     case 'round':
-      return `круглая форма, ${size} см в диаметре`;
+      return `круглая форма, ${size}\u00A0см в диаметре`;
     case 'rectangle':
-      return `прямоугольная форма, ${size} см по длине и ширине`;
+      return `прямоугольная форма, ${size}\u00A0см по длине и ширине`;
     case 'square': 
-      return `квадратная форма, ${size} см по длине и ширине`;
+      return `квадратная форма, ${size}\u00A0см по длине и ширине`;
     default:
       return '';
   }

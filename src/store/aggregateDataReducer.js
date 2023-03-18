@@ -43,7 +43,7 @@ function getShape(name, value) {
     return 'round';
   }
   if (name === 'rect_pan') {
-    const sides = value.split(/[^0-9,\.]+/);
+    const sides = value.split(/[^0-9,.]+/);
     if ('undefined' !== typeof sides[1] && sides[0] !== sides[1]) {
       return 'rectangle';
     }
@@ -66,7 +66,7 @@ function getVolume(shape, value) {
 			volume = Math.PI * Math.pow(parseFloat(value) / 2, 2);
 		} 
 		else if (shape === 'rectangle' || shape === 'square') {
-			const sides = value.split(/[^0-9,\.]+/);
+			const sides = value.split(/[^0-9,.]+/);
 			volume = parseFloat(sides[0]) * parseFloat(sides[1]);
 		}
 	}

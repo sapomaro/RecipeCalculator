@@ -7,6 +7,7 @@ export function TextareaInput({ name, group }) {
   const state = useStoreSelector(elementSelector({ name, group }));
   const dispatch = useStoreDispatch();
   const textareaRef = useRef(null);
+  const firstRenderRef = useRef(true);
   const pastedRef = useRef(false);
 
   const { value } = state;
@@ -29,6 +30,10 @@ export function TextareaInput({ name, group }) {
   }, [dispatch, pastedRef, name, group]);
 
   useEffect(() => {
+    if (firstRenderRef.current) {
+      firstRenderRef.current = false;
+      return;
+    }
     if (textareaRef.current && textareaRef.current !== document.activeElement) {
       textareaRef.current.focus();
     }
