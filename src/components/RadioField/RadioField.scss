@@ -17,6 +17,7 @@
   #{$c}__content {
     display: block;
     cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 
   #{$c}__label {
@@ -64,8 +65,12 @@
     justify-content: center;
     flex: 1;
     color: $color-neutral-400;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     letter-spacing: -1px;
+  }
+
+  #{$c}__content:active {
+    background: transparent;
   }
 
   #{$c}__content:hover {
@@ -125,9 +130,11 @@
     }
 
     #{$c}__input_text {
-      color: $color-neutral-200;
       cursor: not-allowed;
       pointer-events: none;
+      opacity: 1;
+      color: $color-neutral-200;
+      -webkit-text-fill-color: $color-neutral-200;
     }
   }
 

@@ -118,16 +118,16 @@ export function RadioField({ name, group }) {
             {!hasError ? sublabelTopNormal : empty ? sublabelTopEmpty : sublabelTopError}
           </span>
 
-					<input type="text" className={`${c}__input_text`} 
-						ref={fieldRef}
-						maxLength={maxLength}
-						value={disabled ? disabledValue : (checked ? value : blurredValue)}
-						onChange={handleInput}
-						onClick={handleCheck}
-						onInput={handleCheck}
-						onBlur={handleBlur}
-						disabled={disabled}
-					/>
+          <input type="text" inputMode="numeric" className={`${c}__input_text`} 
+            ref={fieldRef}
+            maxLength={maxLength}
+            value={disabled ? disabledValue : (checked ? value : blurredValue)}
+            onChange={handleInput}
+            onClick={handleCheck}
+            onInput={handleCheck}
+            onBlur={handleBlur}
+            disabled={disabled}
+          />
 
           <span className={`${c}__sublabel`}>
             {!hasError ? sublabelBottomNormal : empty ? sublabelBottomEmpty : sublabelBottomError}
