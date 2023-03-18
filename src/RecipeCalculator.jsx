@@ -8,7 +8,6 @@ export function RecipeCalculator() {
     <main className="recipe-calculator">
       <ErrorBoundary>
         <LocalStoreProvider>
-
           <section className="recipe-calculator__section">
             <h1>Калькулятор ингредиентов и форм для выпечки</h1>
 
@@ -24,15 +23,18 @@ export function RecipeCalculator() {
           </section>
 
           <section className="recipe-calculator__section">
-
             <h2>Шаг №1: укажите исходные данные из рецепта</h2>
 
             <h3 id="step1-recipe-measures">Количество порций ∕ размеры формы для выпечки:</h3>
 
             <div className="recipe-calculator__fieldset">
-              <RadioField name="servings" group="in" />
-              <RadioField name="round_pan" group="in" />
-              <RadioField name="rect_pan" group="in" />
+              <div className="recipe-calculator__fieldgroup">
+                <RadioField name="servings" group="in" />
+              </div>
+              <div className="recipe-calculator__fieldgroup">
+                <RadioField name="round_pan" group="in" />
+                <RadioField name="rect_pan" group="in" />
+              </div>
             </div>
 
             <p>
@@ -51,15 +53,18 @@ export function RecipeCalculator() {
           </section>
 
           <section className="recipe-calculator__section">
-
             <h2>Шаг №2: укажите желаемые параметры для пересчёта</h2>
 
             <h3 id="step2-recipe-measures">Новое количество порций ∕ размеры вашей формы для выпечки:</h3>
 
             <div className="recipe-calculator__fieldset">
-              <RadioField name="servings" group="out" />
-              <RadioField name="round_pan" group="out" />
-              <RadioField name="rect_pan" group="out" />
+              <div className="recipe-calculator__fieldgroup">
+                <RadioField name="servings" group="out" />
+              </div>
+              <div className="recipe-calculator__fieldgroup">
+                <RadioField name="round_pan" group="out" />
+                <RadioField name="rect_pan" group="out" />
+              </div>
             </div>
 
             <p>
@@ -74,9 +79,7 @@ export function RecipeCalculator() {
             <TextareaOutput name="ingredients" group="out" />
 
             <Note name="summary" group="out" />
-
           </section>
-
         </LocalStoreProvider>
       </ErrorBoundary>
     </main>
