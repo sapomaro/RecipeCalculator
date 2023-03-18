@@ -90,6 +90,19 @@ export function reducer(state, actionElement) {
         return storeElement;
       });
 
+    case 'PASTE':
+      return updateStoreElements(state, (storeElement) => {
+        if (storeElement.group === 'in') {
+          if (storeElement.type === 'textarea') {
+            return { ...storeElement, value: actionElement.value };
+          }
+          if (storeElement.name === 'clear') {
+            return { ...storeElement, value: 'clear' };
+          }
+        }
+        return storeElement;
+      });
+
 		case 'INIT':
       return updateStoreElements(state, (storeElement) => storeElement);
 

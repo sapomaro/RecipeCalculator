@@ -24,6 +24,7 @@
     @media (max-width: 65rem) {
       width: 100%;
       max-width: 30rem;
+      margin: 2rem 0;
     }
   }
 
@@ -48,8 +49,9 @@
     line-height: 1.5;
   }
 
-  .align_right {
-    text-align: right;
+  &__buttonset {
+    display: flex;
+    justify-content: space-between;
   }
 
   a[href^="#"] {
@@ -61,7 +63,7 @@
   hr {
     width: 100%;
     height: 0;
-    margin: 3rem 0;
+    margin: 2rem 0;
     border: none;
     border-top: 2px solid $color-neutral-100;
   }

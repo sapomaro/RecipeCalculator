@@ -1,5 +1,6 @@
 import { StoreProvider as LocalStoreProvider } from './store';
-import { ClearButton, ErrorBoundary, Note, RadioField, TextareaInput, TextareaOutput } from './components';
+import { ClearButton, ErrorBoundary, Note, PasteButton, RadioField,
+  TextareaInput, TextareaOutput } from './components';
 
 import './RecipeCalculator.scss';
 
@@ -10,7 +11,7 @@ export function RecipeCalculator() {
         <LocalStoreProvider>
           <section className="recipe-calculator__section">
             <h1>Калькулятор ингредиентов и форм для выпечки</h1>
-
+  
             <h2>Для чего он нужен и как работает</h2>
 
             <p>Вы нашли рецепт, который рассчитан на большое количество порций, 
@@ -24,7 +25,7 @@ export function RecipeCalculator() {
 
           <section className="recipe-calculator__section">
             <h2>Шаг №1: укажите исходные данные из рецепта</h2>
-
+            <hr />
             <h3 id="step1-recipe-measures">Количество порций ∕ размеры формы для выпечки:</h3>
 
             <div className="recipe-calculator__fieldset">
@@ -43,18 +44,21 @@ export function RecipeCalculator() {
               </i>
             </p>
 
+            <hr />
+
             <h3>Исходные ингредиенты:</h3>
 
             <TextareaInput name="ingredients" group="in" />
 
-            <p className="align_right">
+            <div className="recipe-calculator__buttonset">
+              <PasteButton name="paste" group="in" />
               <ClearButton name="clear" group="in" />
-            </p>
+            </div>
           </section>
 
           <section className="recipe-calculator__section">
             <h2>Шаг №2: укажите желаемые параметры для пересчёта</h2>
-
+            <hr />
             <h3 id="step2-recipe-measures">Новое количество порций ∕ размеры вашей формы для выпечки:</h3>
 
             <div className="recipe-calculator__fieldset">
@@ -73,6 +77,8 @@ export function RecipeCalculator() {
                 сначала <a href="#step1-recipe-measures">выберите её в шаге №1</a>.
               </i>
             </p>
+
+            <hr />
 
             <h3>Результат рассчётов:</h3>
 
