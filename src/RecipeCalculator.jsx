@@ -1,6 +1,7 @@
 import { StoreProvider as LocalStoreProvider } from './store';
 import { ClearButton, ErrorBoundary, Note, PasteButton, RadioField,
   TextareaInput, TextareaOutput } from './components';
+import { ANCHOR_LINKS } from './constants/anchorLinks';
 
 import './RecipeCalculator.scss';
 
@@ -26,7 +27,7 @@ export function RecipeCalculator() {
           <section className="recipe-calculator__section">
             <h2>Шаг №1: укажите исходные данные из рецепта</h2>
             <hr />
-            <h3 id="step1-recipe-measures">Количество порций ∕ размеры формы для выпечки:</h3>
+            <h3 id={ANCHOR_LINKS.STEP1_MEASURES}>Количество порций ∕ размеры формы для выпечки:</h3>
 
             <div className="recipe-calculator__fieldset">
               <div className="recipe-calculator__fieldgroup">
@@ -59,7 +60,7 @@ export function RecipeCalculator() {
           <section className="recipe-calculator__section">
             <h2>Шаг №2: укажите желаемые параметры для пересчёта</h2>
             <hr />
-            <h3 id="step2-recipe-measures">Новое количество порций ∕ размеры вашей формы для выпечки:</h3>
+            <h3 id={ANCHOR_LINKS.STEP2_MEASURES}>Новое количество порций ∕ размеры вашей формы для выпечки:</h3>
 
             <div className="recipe-calculator__fieldset">
               <div className="recipe-calculator__fieldgroup">
@@ -74,7 +75,7 @@ export function RecipeCalculator() {
             <p>
               <i>
                 Если вам нужна другая категория измерений, 
-                сначала <a href="#step1-recipe-measures">выберите её в шаге №1</a>.
+                сначала <a href={'#' + ANCHOR_LINKS.STEP1_MEASURES}>выберите её в шаге №1</a>.
               </i>
             </p>
 

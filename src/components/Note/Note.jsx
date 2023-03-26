@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { aggregateDataSelector, useStoreDispatch, useStoreSelector } from '../../store';
+import { ANCHOR_LINKS } from '../../constants/anchorLinks';
 
 import './Note.scss';
 
@@ -41,13 +42,13 @@ export function Note() {
 
       <p>Исходные данные из рецепта:&ensp;
         <b>
-          {getSizeInfo(inputShape, inputSize) || <a href="#step1-recipe-measures">укажите выше&nbsp;⬆</a>}
+          {getSizeInfo(inputShape, inputSize) || <a href={'#' + ANCHOR_LINKS.STEP1_MEASURES}>укажите выше&nbsp;⬆</a>}
         </b>
       </p>
 
       <p>Желаемые параметры для пересчёта:&ensp;
         <b>
-          {getSizeInfo(outputShape, outputSize) || <a href="#step2-recipe-measures">укажите выше&nbsp;⬆</a>}
+          {getSizeInfo(outputShape, outputSize) || <a href={'#' + ANCHOR_LINKS.STEP2_MEASURES}>укажите выше&nbsp;⬆</a>}
         </b>
       </p>
 
