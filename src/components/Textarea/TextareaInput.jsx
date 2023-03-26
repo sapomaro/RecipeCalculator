@@ -12,7 +12,9 @@ export function TextareaInput({ name, group }) {
 
   const { value } = state;
 
-  const placeholder = `Скопируйте сюда список ингредиентов...`;
+  const placeholder = 'Скопируйте сюда список ингредиентов...';
+
+  const title = 'Поле для ввода ингредиентов';
 
   const pasteTimeout = 16;
 
@@ -43,6 +45,8 @@ export function TextareaInput({ name, group }) {
     <Textarea
       value={value}
       placeholder={placeholder}
+      title={title}
+      group={group}
       ref={textareaRef}
       onChange={handleInput}
       onPaste={handlePaste}

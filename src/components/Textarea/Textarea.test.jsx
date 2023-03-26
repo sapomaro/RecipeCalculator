@@ -16,7 +16,7 @@ it('should render with value and placeholder', () => {
   const textareaChangeObserver = jest.fn();
 
   render(
-    <CustomTextarea value={textareaValue} placeholder={textareaPlaceholder}  onChange={textareaChangeObserver} />
+    <CustomTextarea value={textareaValue} placeholder={textareaPlaceholder} onChange={textareaChangeObserver} />
   );
 
   const textareaElementByValue = screen.queryByText(textareaValue);
