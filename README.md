@@ -2,7 +2,7 @@
 
 ## Описание
 
-Веб-приложение, которое пересчитывает количество ингредиентов в рецептах на указанные параметры порций / формы для выпечки.
+Веб-приложение, которое пересчитывает количество ингредиентов в рецептах на указанные параметры порций / форм для выпечки.
 
 Ссылка на демо-версию: https://sapomaro.github.io/recipe-calculator/
 
@@ -21,6 +21,6 @@
 
 ## Стек технологий
 
-JavaScript ES6, React 18 & Hooks (useContext, useReducer, forwardRef, ErrorBoundary, etc.), localStorage
+JavaScript ES6, React 18 & Hooks (useContext, useReducer, forwardRef, ErrorBoundary, etc.), SASS, Jest & RTL
 
-Реализован собственный локальный Redux-подобный Store на основе React.Context с возможностью сохранения состояния
+Реализован собственный локальный Redux-подобный Store на основе React.Context с возможностью сохранения состояния через localStorage
