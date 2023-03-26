@@ -1,21 +1,21 @@
 @import '../../constants/colors.scss';
 
 .recipe-calculator__button {
-	box-sizing: border-box;
-	padding: 0.5rem;
-	font-size: 1rem;
-	border: 2px solid $color-neutral-400;
-	border-radius: 5px;
-	color: $color-neutral-800;
-	background: $color-neutral-050;
-	cursor: pointer;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 2px solid $color-neutral-400;
+  border-radius: 5px;
+  color: $color-neutral-800;
+  background: $color-neutral-050;
+  cursor: pointer;
 
-	&:hover {
-		border-color: $color-neutral-800;
-		transition: all 0.1s ease-in;
-	}
+  &:hover {
+    border-color: $color-neutral-800;
+    transition: all 0.1s ease-in;
+  }
 
-	&:enabled:active {
+  &:enabled:active {
     transform: scale(0.98);
   }
 }

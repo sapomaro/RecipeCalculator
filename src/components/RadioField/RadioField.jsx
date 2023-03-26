@@ -8,7 +8,7 @@ export function RadioField({ name, group }) {
   const dispatch = useStoreDispatch();
 
   const fieldRef = useRef(null);
-	const radioRef = useRef(null);
+  const radioRef = useRef(null);
 
   const { value, category, active, checked, valid, disabled } = state;
 
@@ -61,20 +61,20 @@ export function RadioField({ name, group }) {
   };
 
   const handleInput = (event) => {
-		let value = event.target.value;
-		if (name === 'rect_pan') {
-			value = value.replace(/^([0-9,.]+)[^0-9,.]+([0-9,.]*)$/, "$1×$2");
-		}
-		dispatch({ action: 'INPUT', name, group, value });
+    let value = event.target.value;
+    if (name === 'rect_pan') {
+      value = value.replace(/^([0-9,.]+)[^0-9,.]+([0-9,.]*)$/, "$1×$2");
+    }
+    dispatch({ action: 'INPUT', name, group, value });
   };
 
   const handleBlur = (event) => {
-		let value = event.target.value;
-		if (name === 'rect_pan') {
-			if (value.match(/^[0-9]+[,.]?[0-9]*$/)) {
-				value = `${value}×${value}`.slice(0, maxLength);
-			}
-		}
+    let value = event.target.value;
+    if (name === 'rect_pan') {
+      if (value.match(/^[0-9]+[,.]?[0-9]*$/)) {
+        value = `${value}×${value}`.slice(0, maxLength);
+      }
+    }
     dispatch({ action: 'BLUR', name, group, value });
   };
 
@@ -100,21 +100,21 @@ export function RadioField({ name, group }) {
   const emptySelector = (empty) ? `${c}__input_radio_empty` : '';
 
   return (
-		<div className={`${c}`} key={id} title={hintIfDisabled}>
-			<input type="radio" className={`${c}__input_radio ${emptySelector}`}
+    <div className={`${c}`} key={id} title={hintIfDisabled}>
+      <input type="radio" className={`${c}__input_radio ${emptySelector}`}
         id={id}
         name={group}
-				ref={radioRef}
-				checked={checked}
-				disabled={disabled}
+        ref={radioRef}
+        checked={checked}
+        disabled={disabled}
         onChange={handleCheck}
-			/>
+      />
 
-			<label className={`${c}__content`}
+      <label className={`${c}__content`}
         htmlFor={id}
         onClick={handleCheck}
       >
-				<span className={`${c}__shape ${c}__shape_${name}`}>
+        <span className={`${c}__shape ${c}__shape_${name}`}>
           <span className={`${c}__sublabel`}>
             {!hasError ? sublabelTopNormal : empty ? sublabelTopEmpty : sublabelTopError}
           </span>
@@ -133,12 +133,12 @@ export function RadioField({ name, group }) {
           <span className={`${c}__sublabel`}>
             {!hasError ? sublabelBottomNormal : empty ? sublabelBottomEmpty : sublabelBottomError}
           </span>
-				</span>
+        </span>
 
-				<span className={`${c}__label`}>
+        <span className={`${c}__label`}>
           {label}
         </span>
-			</label>
-		</div>
+      </label>
+    </div>
   );
 };

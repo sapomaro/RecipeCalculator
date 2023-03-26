@@ -32,5 +32,5 @@ export function fixRecipeWordForms(text, lang = 'ru') {
     return '';
   }
 
-	return multireplace(text, wordFormsReplacements);
+  return multireplace(text, wordFormsReplacements);
 }

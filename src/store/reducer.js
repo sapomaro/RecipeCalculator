@@ -18,9 +18,9 @@ function updateStoreElements(state, callback) {
 }
 
 export function reducer(state, actionElement) {
-	switch (actionElement.action) {
-		case 'CHECK':
-			return updateStoreElements(state, (storeElement) => {
+  switch (actionElement.action) {
+    case 'CHECK':
+      return updateStoreElements(state, (storeElement) => {
         if (storeElement.type === 'radiofield') {
           if (storeElement.group === actionElement.group) {
             if (storeElement.name === actionElement.name) {
@@ -39,8 +39,8 @@ export function reducer(state, actionElement) {
         return storeElement;
       });
 
-		case 'BLUR':
-			return updateStoreElements(state, (storeElement) => {
+    case 'BLUR':
+      return updateStoreElements(state, (storeElement) => {
         if (storeElement.type === 'radiofield' &&
             storeElement.name === actionElement.name &&
             storeElement.group === actionElement.group) {
@@ -49,8 +49,8 @@ export function reducer(state, actionElement) {
         return storeElement;
       });
 
-		case 'INPUT':
-			return updateStoreElements(state, (storeElement) => {
+    case 'INPUT':
+      return updateStoreElements(state, (storeElement) => {
         if (storeElement.group === actionElement.group) {
           if (storeElement.name === actionElement.name) {
             return { ...storeElement, value: actionElement.value };
@@ -103,10 +103,10 @@ export function reducer(state, actionElement) {
         return storeElement;
       });
 
-		case 'INIT':
+    case 'INIT':
       return updateStoreElements(state, (storeElement) => storeElement);
 
-		default:
-			return state;
-	}
+    default:
+      return state;
+  }
 };

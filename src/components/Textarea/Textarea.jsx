@@ -7,10 +7,10 @@ export const Textarea = forwardRef(function Textarea(props, textareaRef) {
   const { value, placeholder = '', readonly = false, onPaste = null, onChange = () => null } = props;
 
   useEffect(() => {
-		if (textareaRef && textareaRef.current) {
+    if (textareaRef && textareaRef.current) {
       autoResize(textareaRef.current);
     }
-	});
+  });
 
   return (
     <textarea className="recipe-calculator__textarea" 

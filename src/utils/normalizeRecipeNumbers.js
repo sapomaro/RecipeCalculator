@@ -87,5 +87,5 @@ export function normalizeRecipeNumbers(text, lang = 'ru') {
     return '';
   }
 
-	return multireplace(text, numberVariantsReplacements);
+  return multireplace(text, numberVariantsReplacements);
 }
