@@ -12,7 +12,7 @@ export function RadioField({ name, group }) {
 
   const { value, category, active, checked, valid, disabled } = state;
 
-  const id = name + group;
+  const id = name + '_' + group;
 
   const maxLength = 7;
 
@@ -50,9 +50,9 @@ export function RadioField({ name, group }) {
   const handleCheck = () => {
     if (!disabled && !active) {
       if (value === blurredValue) {
-        dispatch({ action: 'TYPED', name, group, value: '' });
+        dispatch({ action: 'INPUT', name, group, value: '' });
       }
-      dispatch({ action: 'CHECKED', name, group, category });
+      dispatch({ action: 'CHECK', name, group, category });
     }
 
     if (fieldRef.current) {
@@ -65,7 +65,7 @@ export function RadioField({ name, group }) {
 		if (name === 'rect_pan') {
 			value = value.replace(/^([0-9,.]+)[^0-9,.]+([0-9,.]*)$/, "$1×$2");
 		}
-		dispatch({ action: 'TYPED', name, group, value });
+		dispatch({ action: 'INPUT', name, group, value });
   };
 
   const handleBlur = (event) => {
@@ -75,7 +75,7 @@ export function RadioField({ name, group }) {
 				value = `${value}×${value}`.slice(0, maxLength);
 			}
 		}
-    dispatch({ action: 'BLURRED', name, group, value });
+    dispatch({ action: 'BLUR', name, group, value });
   };
 
   useEffect(() => {
@@ -103,6 +103,7 @@ export function RadioField({ name, group }) {
 		<div className={`${c}`} key={id} title={hintIfDisabled}>
 			<input type="radio" className={`${c}__input_radio ${emptySelector}`}
         id={id}
+        name={group}
 				ref={radioRef}
 				checked={checked}
 				disabled={disabled}

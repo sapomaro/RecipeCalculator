@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { clearState } from '../../store';
+import { clearStorage } from '../../store';
 
 export class ErrorBoundary extends Component {
   constructor(props) {
@@ -9,7 +9,7 @@ export class ErrorBoundary extends Component {
 
   static getDerivedStateFromError() {
     try {
-      clearState();
+      clearStorage();
       console.warn('Store was cleared due to an error');
     } catch (error) {
       console.warn(error);

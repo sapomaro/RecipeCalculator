@@ -1,19 +1,19 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
-
 import { reducer } from './reducer';
 import { initialState } from './initialState';
 
+const LOCAL_STORAGE_KEY = 'recipeCalculatorState';
+
 const StoreElementsStateContext = createContext(null);
 const StoreDispatchContext = createContext(null);
-const localStorageStateKey = 'recipeCalculatorState';
 
-export function clearState() {
-  localStorage.removeItem(localStorageStateKey);
+export function clearStorage() {
+  localStorage.removeItem(LOCAL_STORAGE_KEY);
 }
 
 function stateInitializer(initialValue = initialState) {
   try {
-    return JSON.parse(localStorage.getItem(localStorageStateKey)) || initialValue;
+    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || initialValue;
   } catch (error) {
     console.warn(error);
     return initialValue;
@@ -25,7 +25,7 @@ export function StoreProvider({ children }) {
 
   useEffect(() => {
     try {
-      localStorage.setItem(localStorageStateKey, JSON.stringify(currentState));
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(currentState));
     } catch (error) {
       console.warn(error);
     }

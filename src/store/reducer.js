@@ -19,7 +19,7 @@ function updateStoreElements(state, callback) {
 
 export function reducer(state, actionElement) {
 	switch (actionElement.action) {
-		case 'CHECKED':
+		case 'CHECK':
 			return updateStoreElements(state, (storeElement) => {
         if (storeElement.type === 'radiofield') {
           if (storeElement.group === actionElement.group) {
@@ -39,7 +39,7 @@ export function reducer(state, actionElement) {
         return storeElement;
       });
 
-		case 'BLURRED':
+		case 'BLUR':
 			return updateStoreElements(state, (storeElement) => {
         if (storeElement.type === 'radiofield' &&
             storeElement.name === actionElement.name &&
@@ -49,7 +49,7 @@ export function reducer(state, actionElement) {
         return storeElement;
       });
 
-		case 'TYPED':
+		case 'INPUT':
 			return updateStoreElements(state, (storeElement) => {
         if (storeElement.group === actionElement.group) {
           if (storeElement.name === actionElement.name) {

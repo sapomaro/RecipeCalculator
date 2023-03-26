@@ -1,2 +1,2 @@
-export { aggregateDataSelector, clearState, elementSelector, StoreProvider,
+export { aggregateDataSelector, clearStorage, elementSelector, StoreProvider,
   useStoreDispatch, useStoreSelector } from './store';

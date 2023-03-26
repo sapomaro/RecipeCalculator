@@ -26,7 +26,7 @@ export function TextareaInput({ name, group }) {
     if (pastedRef.current) {
       value = padRecipeNumbers(value);
     }
-    dispatch({ action: 'TYPED', name, group, value });
+    dispatch({ action: 'INPUT', name, group, value });
   }, [dispatch, pastedRef, name, group]);
 
   useEffect(() => {
