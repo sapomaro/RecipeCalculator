@@ -4,7 +4,7 @@ import { autoResize } from '../../utils';
 import './Textarea.scss';
 
 export const Textarea = forwardRef(function Textarea(props, textareaRef) {
-  const { value, placeholder, readonly = false, onPaste = null, onChange = null } = props;
+  const { value, placeholder = '', readonly = false, onPaste = null, onChange = () => null } = props;
 
   useEffect(() => {
 		if (textareaRef && textareaRef.current) {
@@ -13,17 +13,13 @@ export const Textarea = forwardRef(function Textarea(props, textareaRef) {
 	});
 
   return (
-    <div className="recipe-calculator__textarea">
-      <div className="recipe-calculator__textarea__placeholder">
-        {value === '' ? placeholder : ''}
-      </div>
-      <textarea className="recipe-calculator__textarea__input" 
-        ref={textareaRef}
-        value={value}
-        onPaste={onPaste}
-        onChange={onChange}
-        readOnly={readonly}
-      ></textarea>
-    </div>
+    <textarea className="recipe-calculator__textarea" 
+      ref={textareaRef}
+      value={value}
+      placeholder={placeholder}
+      onPaste={onPaste}
+      onChange={onChange}
+      readOnly={readonly}
+    ></textarea>
   );
 });
