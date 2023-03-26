@@ -114,7 +114,7 @@ export function RadioField({ name, group }) {
         htmlFor={id}
         onClick={handleCheck}
       >
-        <span className={`${c}__shape ${c}__shape_${name}`}>
+        <span className={`${c}__shape ${c}__shape_${name} ${c}__shape_${group}`}>
           <span className={`${c}__sublabel`}>
             {!hasError ? sublabelTopNormal : empty ? sublabelTopEmpty : sublabelTopError}
           </span>
