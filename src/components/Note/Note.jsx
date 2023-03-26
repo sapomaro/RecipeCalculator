@@ -34,7 +34,7 @@ export function Note() {
   }, [dispatch]);
 
   return (
-    <div className="recipe-calculator__note">
+    <div role="note" className="recipe-calculator__note">
       <p>
         {multiplier ? 'Вес ∕ объём каждного ингредиента перемножается на: ' : ''}
         <b>{multiplier ? multiplier : ''}</b>
