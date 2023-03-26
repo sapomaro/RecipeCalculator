@@ -7,18 +7,18 @@ import './RecipeCalculator.scss';
 
 export function RecipeCalculator() {
   return (
-    <main className="recipe-calculator">
+    <main className="recipe-calculator" itemScope itemType="http://schema.org/WebApplication">
       <ErrorBoundary>
         <LocalStoreProvider>
           <section className="recipe-calculator__section">
-            <h1>Калькулятор ингредиентов и форм для выпечки</h1>
+            <h1 itemProp="name">Калькулятор ингредиентов и форм для выпечки</h1>
   
             <h2>Для чего он нужен и как работает</h2>
 
-            <p>Вы нашли рецепт, который рассчитан на большое количество порций, 
+            <p itemProp="description">Вы нашли рецепт, который рассчитан на большое количество порций, 
               а вы хотите приготовить в два раза меньше. Либо в инструкции указана 
               большая круглая форма для выпечки, а у вас есть только маленькая 
-              квадратная, и нужно пересчитать количество ингредиентов, чтобы торт 
+              квадратная, и нужно пересчитать количество ингредиентов, чтобы десерт 
               получился такой же высоты. Для подобных случаев и создан этот 
               кулинарный калькулятор.
             </p>
