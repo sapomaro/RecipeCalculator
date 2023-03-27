@@ -1,6 +1,7 @@
 import { render, fireEvent, screen } from '@testing-library/react';
 import { RadioField } from './RadioField';
 import { StoreProvider as LocalStoreProvider } from '../../store';
+import { sleep } from '../../utils';
 
 const roundPanLabel = /круглая\sформа/i;
 const rectPanLabel = /прямоугольная\sформа/i;
@@ -110,4 +111,21 @@ it('should validate', () => {
 
   expect(inputRadio).toBeInvalid();
   expect(inputText).toBeInvalid();
+});
+
+it('should change value via mouse wheel', async () => {
+  render(<RadioFieldGroup />);
+
+  window.scrollTo = jest.fn();
+
+  let [inputText] = screen.queryAllByLabelText(roundPanLabel);
+
+  fireEvent.change(inputText, { target: { value: '1' }});
+  fireEvent.mouseOver(inputText);
+
+  await sleep(600);
+
+  fireEvent.wheel(inputText, { deltaY: -100 });
+
+  expect(inputText.value).toBe('2');
 });

@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { elementSelector, useStoreDispatch, useStoreSelector } from '../../store';
+import { disableScrolling, enableScrolling } from '../../utils';
 
 import './RadioField.scss';
 
@@ -7,14 +8,19 @@ export function RadioField({ name, group }) {
   const state = useStoreSelector(elementSelector({ name, group }));
   const dispatch = useStoreDispatch();
 
+  const shapeRef = useRef(null);
   const fieldRef = useRef(null);
   const radioRef = useRef(null);
+  const wheelTimerRef = useRef(null);
+  const wheelAllowedRef = useRef(false);
+  const allowWheelTimeout = 500;
 
   const { value, category, active, checked, valid, disabled } = state;
 
   const id = name + '_' + group;
 
   const maxLength = 7;
+  const dimensionsDelimeter = '×';
 
   const disabledValue = '✕';
 
@@ -63,7 +69,7 @@ export function RadioField({ name, group }) {
   const handleInput = (event) => {
     let value = event.target.value;
     if (name === 'rect_pan') {
-      value = value.replace(/^([0-9,.]+)[^0-9,.]+([0-9,.]*)$/, "$1×$2");
+      value = value.replace(/^([0-9,.]+)[^0-9,.]+([0-9,.]*)$/, '$1' + dimensionsDelimeter + '$2');
     }
     dispatch({ action: 'INPUT', name, group, value });
   };
@@ -72,10 +78,87 @@ export function RadioField({ name, group }) {
     let value = event.target.value;
     if (name === 'rect_pan') {
       if (value.match(/^[0-9]+[,.]?[0-9]*$/)) {
-        value = `${value}×${value}`.slice(0, maxLength);
+        value = `${value}${dimensionsDelimeter}${value}`.slice(0, maxLength);
       }
     }
     dispatch({ action: 'BLUR', name, group, value });
+  };
+
+  const handleCounter = (amount, isLeftSide) => {
+    let newValue = 0;
+    let newLeftValue = 0;
+    let newRightValue = 0;
+    if (name === 'rect_pan') {
+      if (value.indexOf(dimensionsDelimeter) === -1) {
+        return;
+      }
+      const [oldLeftValue, oldRightValue] = value.split(dimensionsDelimeter);
+
+      if (isLeftSide) {
+        newLeftValue = parseInt(oldLeftValue || 0) + amount;
+        newRightValue = oldRightValue;
+        if (newLeftValue < 1) {
+          return;
+        }
+      } else {
+        newLeftValue = oldLeftValue;
+        newRightValue = parseInt(oldRightValue || 0) + amount;
+        if (newRightValue < 1) {
+          return;
+        }
+      }
+      newValue = newLeftValue + dimensionsDelimeter + newRightValue;
+    } else {
+      newValue = parseInt(value || 0) + amount;
+      if (newValue < 1) {
+        return;
+      }
+    }
+
+    dispatch({ action: 'INPUT', name, group, value: newValue + '' });
+  };
+
+  const handleWheel = useCallback((event) => {
+    if (checked && wheelAllowedRef.current) {
+
+      let isLeftSide = true;
+      if (name === 'rect_pan' && event.currentTarget && event.clientX) {
+        const rect = event.currentTarget.getBoundingClientRect();
+        isLeftSide = (event.clientX - rect.left) < (event.currentTarget.offsetWidth / 2);
+      }
+
+      if (event.deltaY < 0) {
+        handleCounter(1, isLeftSide);
+      } else {
+        handleCounter(-1, isLeftSide);
+      }
+
+      return false;
+    }
+  });
+
+  const handleMouse = (event) => {
+    if (!checked) {
+      return;
+    }
+
+    if (event.type === 'mouseover') {
+      if (wheelTimerRef.current) {
+        clearTimeout(wheelTimerRef.current);
+        wheelAllowedRef.current = false;
+      }
+      wheelTimerRef.current = setTimeout(() => {
+        wheelAllowedRef.current = true;
+        disableScrolling();
+      }, allowWheelTimeout);
+    } else if (event.type === 'mouseout') {
+      if (wheelTimerRef.current) {
+        clearTimeout(wheelTimerRef.current);
+        wheelTimerRef.current = null;
+      }
+      wheelAllowedRef.current = false;
+      enableScrolling();
+    }
   };
 
   useEffect(() => {
@@ -94,6 +177,17 @@ export function RadioField({ name, group }) {
     if (active) {
       fieldRef.current.focus();
     }
+
+    if (!shapeRef.current) {
+      return null;
+    }
+    shapeRef.current.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      if (shapeRef && shapeRef.current) {
+        shapeRef.current.removeEventListener('wheel', handleWheel, { passive: false });
+      }
+    };
   });
 
   const c = 'recipe-calculator__radiofield';
@@ -114,7 +208,11 @@ export function RadioField({ name, group }) {
         htmlFor={id}
         onClick={handleCheck}
       >
-        <span className={`${c}__shape ${c}__shape_${name} ${c}__shape_${group}`}>
+        <span className={`${c}__shape ${c}__shape_${name} ${c}__shape_${group}`}
+          ref={shapeRef}
+          onMouseOver={handleMouse}
+          onMouseOut={handleMouse}
+        >
           <span className={`${c}__sublabel`}>
             {!hasError ? sublabelTopNormal : empty ? sublabelTopEmpty : sublabelTopError}
           </span>
