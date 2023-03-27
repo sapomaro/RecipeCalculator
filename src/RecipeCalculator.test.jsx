@@ -79,7 +79,7 @@ it('should calculate based on servings', () => {
   expect(ui.out.recipeTextarea.value).toBe('Jest - 200 гр\nRTL - 400 гр');
 });
 
-it('should calculate based on servings', () => {
+it('should handle state changes', () => {
   const ui = renderUI();
 
   fireEvent.click(ui.in.roundPanText);
@@ -107,4 +107,22 @@ it('should calculate based on servings', () => {
   expect(ui.out.rectPanRadio).not.toBeChecked();
   expect(ui.out.rectPanRadio).toBeEnabled();
   expect(ui.out.rectPanText).toBeEnabled();
+});
+
+it('should respond to clear/restore button click', () => {
+  const ui = renderUI();
+
+  fireEvent.change(ui.in.recipeTextarea, { target: { value: 'Текст' }});
+
+  expect(ui.out.recipeTextarea.value).toBe('Текст');
+
+  fireEvent.click(ui.in.clearButton);
+
+  expect(ui.in.recipeTextarea.value).toBe('');
+  expect(ui.out.recipeTextarea.value).toBe('');
+
+  fireEvent.click(ui.in.clearButton);
+
+  expect(ui.in.recipeTextarea.value).toBe('Текст');
+  expect(ui.out.recipeTextarea.value).toBe('Текст');
 });
