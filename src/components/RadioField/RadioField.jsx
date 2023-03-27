@@ -84,7 +84,7 @@ export function RadioField({ name, group }) {
     dispatch({ action: 'BLUR', name, group, value });
   };
 
-  const handleCounter = (amount, isLeftSide) => {
+  const handleCounter = useCallback((amount, isLeftSide) => {
     let newValue = 0;
     let newLeftValue = 0;
     let newRightValue = 0;
@@ -116,11 +116,10 @@ export function RadioField({ name, group }) {
     }
 
     dispatch({ action: 'INPUT', name, group, value: newValue + '' });
-  };
+  }, [name, value, group, dispatch]);
 
   const handleWheel = useCallback((event) => {
     if (checked && wheelAllowedRef.current) {
-
       let isLeftSide = true;
       if (name === 'rect_pan' && event.currentTarget && event.clientX) {
         const rect = event.currentTarget.getBoundingClientRect();
@@ -135,7 +134,7 @@ export function RadioField({ name, group }) {
 
       return false;
     }
-  });
+  }, [name, checked, handleCounter]);
 
   const handleMouse = (event) => {
     if (!checked) {
@@ -181,11 +180,12 @@ export function RadioField({ name, group }) {
     if (!shapeRef.current) {
       return null;
     }
-    shapeRef.current.addEventListener('wheel', handleWheel, { passive: false });
+    const shapeRefNode = shapeRef.current;
+    shapeRefNode.addEventListener('wheel', handleWheel, { passive: false });
 
     return () => {
-      if (shapeRef && shapeRef.current) {
-        shapeRef.current.removeEventListener('wheel', handleWheel, { passive: false });
+      if (shapeRefNode) {
+        shapeRefNode.removeEventListener('wheel', handleWheel, { passive: false });
       }
     };
   });
