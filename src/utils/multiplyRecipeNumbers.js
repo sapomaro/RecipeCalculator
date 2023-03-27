@@ -42,7 +42,7 @@ export function multiplyRecipeNumbers(text, multiplier) {
       let index = regexp.lastIndex - matchedNumber.length;
 
       entry = entry.slice(0, index) + // eslint-disable-next-line no-useless-escape
-        entry.slice(index).replace(matchedNumber.replace('.', '\.'), newQuantity.toString(10));
+        entry.slice(index).replace(matchedNumber.replace('.', '\.'), newQuantity.toString());
 
       regexp.lastIndex += newQuantity.toString().length - matchedNumber.length;
     }
