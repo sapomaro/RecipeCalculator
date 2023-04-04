@@ -3,14 +3,14 @@ import { ClearButton, ErrorBoundary, Note, PasteButton, RadioField,
   TextareaInput, TextareaOutput } from './components';
 import { ANCHOR_LINKS } from './constants/anchorLinks';
 
-import './RecipeCalculator.scss';
+import styles from './RecipeCalculator.module.scss';
 
 export function RecipeCalculator() {
   return (
-    <main className="recipe-calculator" itemScope itemType="http://schema.org/WebApplication">
+    <div className={styles.container} itemScope itemType="http://schema.org/WebApplication">
       <ErrorBoundary>
         <LocalStoreProvider>
-          <section className="recipe-calculator__section">
+          <section className={styles.section}>
             <h1 itemProp="name">Калькулятор ингредиентов и форм для выпечки</h1>
   
             <h2>Для чего он нужен и как работает</h2>
@@ -24,16 +24,16 @@ export function RecipeCalculator() {
             </p>
           </section>
 
-          <section className="recipe-calculator__section">
+          <section className={styles.section}>
             <h2>Шаг №1: укажите исходные данные из рецепта</h2>
             <hr />
             <h3 id={ANCHOR_LINKS.STEP1_MEASURES}>Количество порций ∕ размеры формы для выпечки:</h3>
 
-            <div className="recipe-calculator__fieldset">
-              <div className="recipe-calculator__fieldgroup">
+            <div className={styles.fieldset}>
+              <div>
                 <RadioField name="servings" group="in" />
               </div>
-              <div className="recipe-calculator__fieldgroup">
+              <div>
                 <RadioField name="round_pan" group="in" />
                 <RadioField name="rect_pan" group="in" />
               </div>
@@ -51,22 +51,22 @@ export function RecipeCalculator() {
 
             <TextareaInput name="ingredients" group="in" />
 
-            <div className="recipe-calculator__buttonset">
+            <div className={styles.buttonset}>
               <PasteButton name="paste" group="in" />
               <ClearButton name="clear" group="in" />
             </div>
           </section>
 
-          <section className="recipe-calculator__section">
+          <section className={styles.section}>
             <h2>Шаг №2: укажите желаемые параметры для пересчёта</h2>
             <hr />
             <h3 id={ANCHOR_LINKS.STEP2_MEASURES}>Новое количество порций ∕ размеры вашей формы для выпечки:</h3>
 
-            <div className="recipe-calculator__fieldset">
-              <div className="recipe-calculator__fieldgroup">
+            <div className={styles.fieldset}>
+              <div>
                 <RadioField name="servings" group="out" />
               </div>
-              <div className="recipe-calculator__fieldgroup">
+              <div>
                 <RadioField name="round_pan" group="out" />
                 <RadioField name="rect_pan" group="out" />
               </div>
@@ -89,6 +89,6 @@ export function RecipeCalculator() {
           </section>
         </LocalStoreProvider>
       </ErrorBoundary>
-    </main>
+    </div>
   );
 }

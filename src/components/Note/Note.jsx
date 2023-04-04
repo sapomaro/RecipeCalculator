@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { aggregateDataSelector, useStoreDispatch, useStoreSelector } from '../../store';
 import { ANCHOR_LINKS } from '../../constants/anchorLinks';
 
-import './Note.scss';
+import styles from './Note.module.scss';
 
 function getSizeInfo(shape, size) {
   if (!shape || !size) {
@@ -34,7 +34,7 @@ export function Note() {
   }, [dispatch]);
 
   return (
-    <div role="note" className="recipe-calculator__note">
+    <div role="note" className={styles.note}>
       <p>
         {multiplier ? 'Вес ∕ объём каждного ингредиента умножается на: ' : ''}
         <b>{multiplier ? multiplier : ''}</b>

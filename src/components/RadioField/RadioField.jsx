@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { elementSelector, useStoreDispatch, useStoreSelector } from '../../store';
 import { disableScrolling, enableScrolling } from '../../utils';
 
-import './RadioField.scss';
+import styles from './RadioField.module.scss';
 
 export function RadioField({ name, group }) {
   const state = useStoreSelector(elementSelector({ name, group }));
@@ -190,12 +190,11 @@ export function RadioField({ name, group }) {
     };
   });
 
-  const c = 'recipe-calculator__radiofield';
-  const emptySelector = (empty) ? `${c}__input_radio_empty` : '';
+  const emptySelector = (empty) ? styles.radiofield__input_radio_empty : '';
 
   return (
-    <div className={`${c}`} key={id} title={hintIfDisabled}>
-      <input type="radio" className={`${c}__input_radio ${emptySelector}`}
+    <div className={styles.radiofield} key={id} title={hintIfDisabled}>
+      <input type="radio" className={`${styles.radiofield__input_radio} ${emptySelector}`}
         id={id}
         name={group}
         ref={radioRef}
@@ -204,20 +203,24 @@ export function RadioField({ name, group }) {
         onChange={handleCheck}
       />
 
-      <label className={`${c}__content`}
+      <label className={styles.radiofield__content}
         htmlFor={id}
         onClick={handleCheck}
       >
-        <span className={`${c}__shape ${c}__shape_${name} ${c}__shape_${group}`}
+        <span className={`
+            ${styles.radiofield__shape} 
+            ${styles['radiofield__shape_' + name]} 
+            ${styles['radiofield__shape_' + group]}
+          `}
           ref={shapeRef}
           onMouseOver={handleMouse}
           onMouseOut={handleMouse}
         >
-          <span className={`${c}__sublabel`}>
+          <span className={styles.radiofield__sublabel}>
             {!hasError ? sublabelTopNormal : empty ? sublabelTopEmpty : sublabelTopError}
           </span>
 
-          <input type="text" inputMode="numeric" className={`${c}__input_text`} 
+          <input type="text" inputMode="numeric" className={styles.radiofield__input_text} 
             ref={fieldRef}
             maxLength={maxLength}
             value={disabled ? disabledValue : (checked ? value : blurredValue)}
@@ -228,12 +231,12 @@ export function RadioField({ name, group }) {
             disabled={disabled}
           />
 
-          <span className={`${c}__sublabel`}>
+          <span className={styles.radiofield__sublabel}>
             {!hasError ? sublabelBottomNormal : empty ? sublabelBottomEmpty : sublabelBottomError}
           </span>
         </span>
 
-        <span className={`${c}__label`}>
+        <span className={styles.radiofield__label}>
           {label}
         </span>
       </label>

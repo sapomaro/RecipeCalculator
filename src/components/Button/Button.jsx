@@ -1,7 +1,7 @@
-import './Button.scss';
+import styles from './Button.module.scss';
 
 export function Button({ label, onClick }) {
   return (
-    <button className="recipe-calculator__button" onClick={onClick}>{label}</button>
+    <button className={styles.button} onClick={onClick}>{label}</button>
   );
 };
