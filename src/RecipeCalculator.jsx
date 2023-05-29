@@ -81,7 +81,7 @@ export function RecipeCalculator() {
 
             <hr />
 
-            <h3>Результат рассчётов:</h3>
+            <h3>Результат расчётов:</h3>
 
             <TextareaOutput name="ingredients" group="out" />
 
